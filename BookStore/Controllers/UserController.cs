@@ -22,13 +22,27 @@ namespace BookStore.Controllers
             this.UserBl = UserBl;
         }
 
-        //Add an employee's record to the database
+        //Method to register user details 
         [HttpPost]
         [Route("")]
         public IActionResult UserRegistration(UserRegistration user)
         {
-            var data = UserBl.Registration(user);
-            return Ok(new { data = data });
+            try
+            {
+                var data = UserBl.Registration(user);
+                if (data.Status == "Invalid Email")
+                {
+                    return Ok(new { success = false, Message = "registration failed" });
+                }
+                else
+                {
+                    return Ok(new { success = true, Message = "registration successfull"});
+                }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
         }
     }
 }

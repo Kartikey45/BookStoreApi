@@ -19,9 +19,11 @@ namespace RepositoryLayer.Services
             Configuration = configuration;
         }
 
-        public UserRegistration Registration(UserRegistration user)
+        //Method to register user in the dataabase
+        public Response Registration(UserRegistration user)
         {
-           try
+            Response response = new Response();
+            try
            {
                 //Connection string declared
                 string connect = Configuration.GetConnectionString("MyConnection");
@@ -49,18 +51,30 @@ namespace RepositoryLayer.Services
                     //connection open 
                     Connection.Open();
 
+                    int status = 0;
+
                     //Execute query
-                    sqlCommand.ExecuteNonQuery();
+                    status = sqlCommand.ExecuteNonQuery();
 
                     //connection close
                     Connection.Close();
+
+                    //validation
+                    if (status == 1)
+                    {
+                        response.Status = "Valid Email";
+                    }
+                    else
+                    {
+                        response.Status = "Invalid Email";
+                    }
                 }
+                return response;
             }
-           catch(Exception ex)
-           {
+            catch(Exception ex)
+            {
                 throw new Exception(ex.Message);
-           }
-            return user;
+            }
         }
     }
 }

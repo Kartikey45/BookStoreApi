@@ -7,6 +7,7 @@ namespace RepositoryLayer.Interface
 {
     public interface IUserRL
     {
-        UserRegistration Registration(UserRegistration user);
+        //Method to register user details
+        Response Registration(UserRegistration user);
     }
 }

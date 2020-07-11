@@ -18,10 +18,18 @@ namespace BusinessLayer.Services
             this.UserDetails = UserDetails;
         }
 
-        public UserRegistration Registration(UserRegistration user)
+        //Method to register user details
+        public Response Registration(UserRegistration user)
         {
-            var result = UserDetails.Registration(user);
-            return result;
+            try
+            {
+                var result = UserDetails.Registration(user);
+                return result;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
