@@ -22,6 +22,9 @@ namespace BookStore.Controllers
         private readonly IUserBL UserBl;
         private readonly IConfiguration _configuration;
 
+        //Instance of Sender class
+        Sender sender = new Sender();
+
         //Constructor 
         public UserController(IUserBL UserBl, IConfiguration _configuration)
         {
@@ -43,7 +46,12 @@ namespace BookStore.Controllers
                 }
                 else
                 {
-                    return Ok(new { success = true, Message = "registration successfull"});
+                    string MSMQ =   "\n First Name : " + Convert.ToString(user.FirstName) + 
+                                    "\n Last Name : " + Convert.ToString(user.LastName) +
+                                    "\n User Role : " + Convert.ToString(user.UserRole) +
+                                    "\n Email : " + Convert.ToString(user.Email);
+                    sender.Message(MSMQ);
+                    return Ok(new { success = true, Message = "registration successfull" });
                 }
             }
             catch(Exception ex)
