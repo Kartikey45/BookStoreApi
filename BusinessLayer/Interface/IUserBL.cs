@@ -9,5 +9,8 @@ namespace BusinessLayer.Interface
     {
          //Method to register user details
          Response Registration(UserRegistration user);
+
+        //Method for user login
+        UserDetails Login(UserLogin user);
     }
 }
