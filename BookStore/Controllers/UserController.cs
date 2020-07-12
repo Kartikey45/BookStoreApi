@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.Interface;
 using CommonLayer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BookStore.Controllers
 {
@@ -15,11 +20,13 @@ namespace BookStore.Controllers
     {
         //Variable declared
         private readonly IUserBL UserBl;
+        private readonly IConfiguration _configuration;
 
         //Constructor 
-        public UserController(IUserBL UserBl)
+        public UserController(IUserBL UserBl, IConfiguration _configuration)
         {
             this.UserBl = UserBl;
+            this._configuration = _configuration;
         }
 
         //Method to register user details 
@@ -53,6 +60,7 @@ namespace BookStore.Controllers
             try
             {
                 UserDetails data = UserBl.Login(login);
+                string JsonToken = CreateToken(data, "AuthenticateUserRole");
                 bool success = false;
                 string message;
                 if (data == null )
@@ -64,12 +72,40 @@ namespace BookStore.Controllers
                 {
                     success = true;
                     message = "Login Successfully";
-                    return Ok(new { success , message });
+
+                    return Ok(new { success , message, JsonToken });
                 }
             }
             catch(Exception ex)
             {
                 return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        //Method to create JWT token
+        private string CreateToken(UserDetails responseData, string type)
+        {
+            try
+            {
+                var symmetricSecuritykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                var signingCreds = new SigningCredentials(symmetricSecuritykey, SecurityAlgorithms.HmacSha256);
+
+                var claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.Role, responseData.UserRole));
+                claims.Add(new Claim("Email", responseData.Email.ToString()));
+                //claims.Add(new Claim("UserId", responseData.UserId.ToString()));
+                claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+
+                var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
+                    _configuration["Jwt:Issuer"],
+                    claims,
+                    expires: DateTime.Now.AddHours(1),
+                    signingCredentials: signingCreds);
+                return new JwtSecurityTokenHandler().WriteToken(token);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }
