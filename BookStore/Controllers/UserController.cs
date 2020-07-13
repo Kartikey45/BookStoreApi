@@ -73,7 +73,6 @@ namespace BookStore.Controllers
                 string message;
                 UserDetails DATA;
 
-                
                 UserDetails Data = new UserDetails()
                 {
                     UserId = data.UserId,

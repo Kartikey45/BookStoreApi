@@ -40,7 +40,7 @@ namespace MSMQ.SMTP
                 using (var client = new SmtpClient())
                 {
                     client.Connect("smtp.gmail.com", 587, false);
-                    client.Authenticate("singhkartikey45@gmail.com", "9754286186");
+                    client.Authenticate("singhkartikey45@gmail.com", "");
                     client.Send(message);
                     client.Disconnect(true);
                 }
