@@ -36,6 +36,8 @@ namespace BookStore
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IUserRL, UserRL>();
             services.AddTransient<IUserBL, UserBL>();
+            services.AddTransient<IBookStoreBL, BookStoreBL>();
+            services.AddTransient<IBookStoreRL, BookStoreRL>();
 
             //JWT Autentication applied
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
