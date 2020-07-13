@@ -33,6 +33,7 @@ namespace BusinessLayer.Services
             }
         }
 
+        //Get all Books details
         public List<BooksDetails> ViewAllBooks()
         {
             try
@@ -45,5 +46,20 @@ namespace BusinessLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        //Delete Book By Id
+        public Response DeleteBook(int BookId)
+        {
+           try
+            {
+                var result = BookDetails.DeleteBook(BookId);
+                return result;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

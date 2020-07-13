@@ -121,5 +121,44 @@ namespace RepositoryLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        //Method to delete book By id
+        public Response DeleteBook(int BookId)
+        {
+            Response response = new Response(); 
+            try
+            {
+                //Connection string declared
+                string connect = Configuration.GetConnectionString("MyConnection");
+
+                using (SqlConnection Connection = new SqlConnection(connect))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("DeleteBookById", Connection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@BookId", BookId);
+
+                    Connection.Open();
+
+                    int data = 0;
+
+                    data = sqlCommand.ExecuteNonQuery();
+                    Connection.Close();
+
+                    if(data == 1)
+                    {
+                        response.Status = "Deleted";
+                    }
+                    else
+                    {
+                        response.Status = "Not Deleted";
+                    }
+                }
+                return response;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

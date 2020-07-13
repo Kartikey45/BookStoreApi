@@ -13,5 +13,8 @@ namespace RepositoryLayer.Interface
 
         //Method to get all book details
         List<BooksDetails> ViewAllBooks();
+
+        //Method to Delete Book details
+        Response DeleteBook(int BookId);
     }
 }

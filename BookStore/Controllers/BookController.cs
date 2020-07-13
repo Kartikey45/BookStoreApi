@@ -7,6 +7,7 @@ using CommonLayer.BookStoreModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters.Xml;
 using Microsoft.Extensions.Configuration;
 
 namespace BookStore.Controllers
@@ -41,10 +42,10 @@ namespace BookStore.Controllers
                 }
                 else
                 {
-                    return Ok(new { success = true, Message = "Book Inserted" }); 
+                    return Ok(new { success = true, Message = "Book Inserted" });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(new { success = false, message = ex.Message });
             }
@@ -64,12 +65,36 @@ namespace BookStore.Controllers
                 }
                 else
                 {
-                    return Ok(new { success = true, message = "successfull" , Data = data});
+                    return Ok(new { success = true, message = "successfull", Data = data });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        //Method to delete Book by id
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        [Route("{BookId}")]
+        public IActionResult DeleteBookyId(int BookId)
+        {
+            try
+            {
+                var data = BookDetails.DeleteBook(BookId);
+                if(data.Status == "Not Deleted")
+                {
+                    return Ok(new { success = false, Message = "Failed to delete" });
+                }
+                else
+                {
+                    return Ok(new { success = true, Message = "deleted successfully" });
                 }
             }
             catch(Exception ex)
             {
-                return BadRequest(new { success = false , message = ex.Message });
+                return BadRequest(new { success = false, message = ex.Message });
             }
         }
     }
