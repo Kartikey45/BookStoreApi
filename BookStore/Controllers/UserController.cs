@@ -71,17 +71,33 @@ namespace BookStore.Controllers
                 string JsonToken = CreateToken(data, "AuthenticateUserRole");
                 bool success = false;
                 string message;
+                UserDetails DATA;
+
+                
+                UserDetails Data = new UserDetails()
+                {
+                    UserId = data.UserId,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    UserRole = data.UserRole,
+                    Email = data.Email,
+                    Address = data.Address,
+                    City = data.Address,
+                    PhoneNumber = data.PhoneNumber
+                };
+                
                 if (data == null )
                 {
                     message = "Enter Valid Email & Password";
+                    //DATA = login;
                     return Ok(new { success , message });
                 }
                 else
                 {
                     success = true;
                     message = "Login Successfully";
-
-                    return Ok(new { success , message, JsonToken });
+                    DATA = Data;
+                    return Ok(new { success , message, DATA, JsonToken });
                 }
             }
             catch(Exception ex)

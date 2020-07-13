@@ -15,8 +15,8 @@ namespace CommonLayer.Models
         [RegularExpression(@"^[A-Z][a-zA-Z]{2,15}$", ErrorMessage = "Invalid Last Name")]
         public string LastName { get; set; }
 
-        [Required]
-        [RegularExpression(@"^Customer|^customer|^CUSTOMER", ErrorMessage = "Invali User Role , Only Customer can do the registration")]
+        //[Required]
+        [RegularExpression(@"^Customer|^customer|^CUSTOMER", ErrorMessage = "Invalid User Role , Only Customer can do the registration")]
         public string UserRole { get; set; }
 
         [Required]
@@ -27,13 +27,13 @@ namespace CommonLayer.Models
         [RegularExpression(@"^[a-zA-Z0-9]*[@#$&*_+-]{1}[a-zA-Z0-9]*$", ErrorMessage = "Invalid Password type")]
         public string Password { get; set; }
 
-        [Required]
+        //[Required]
         public string Address { get; set; }
 
-        [Required]
+        //[Required]
         public string City { get; set; }
 
-        [Required]
+        //[Required]
         [Phone]
         public string PhoneNumber { get; set; }
 

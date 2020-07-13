@@ -9,7 +9,7 @@ namespace CommonLayer.Models
     {
         //[Required]
         //[RegularExpression(@"^Customer|^customer|^CUSTOMER|^Admin|^ADMIN|^admin", ErrorMessage = "Invali User Role")]
-        public string UserRole { get; set; }
+        //public string UserRole { get; set; }
 
         [Required]
         [RegularExpression(@"^[a-zA-Z0-9]{1,}([.]?[-]?[+]?[a-zA-Z0-9]{1,})?[@]{1}[a-zA-Z0-9]{1,}[.]{1}[a-z]{2,3}([.]?[a-z]{2})?$", ErrorMessage = "Invalid Email Id")]

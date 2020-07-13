@@ -119,7 +119,7 @@ namespace RepositoryLayer.Services
                         details.LastName = reader["LastName"].ToString();
                         details.UserRole = reader["UserRole"].ToString();
                         details.Email = reader["Email"].ToString();
-                        details.Password = reader["Password"].ToString();
+                        //details.Password = reader["Password"].ToString();
                         details.Address = reader["Address"].ToString();
                         details.City = reader["City"].ToString();
                         details.PhoneNumber = reader["PhoneNumber"].ToString();
