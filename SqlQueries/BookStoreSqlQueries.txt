@@ -1,16 +1,3 @@
-##
-create table BooksDetails
-(
-	BookId int IDENTITY(1,1) PRIMARY KEY,
-	Title varchar(255),
-	Description varchar(255),
-	Author varchar(255),
-	Pages int,
-	Price decimal,
-	CreatedDate datetime,
-	ModifiedDate datetime 
-);
-
 
 ##
 create table UserInformation
@@ -29,11 +16,10 @@ create table UserInformation
 );
 
 
-##
+## 
 create procedure UserRegistration
 @FirstName varchar(255),
 @LastName varchar(255),
-@UserRole varchar(255),
 @Email varchar(255),
 @Password varchar(255),
 @Address varchar(255),
@@ -45,7 +31,7 @@ begin
 if not exists (select Email from UserInformation where Email = @Email)
 begin
 	insert into UserInformation(FirstName,LastName,UserRole,Email,Password,Address,City,PhoneNumber, CreatedDate)
-	values (@FirstName, @LastName , @UserRole , @Email , @Password , @Address , @City , @PhoneNumber , @CreatedDate);
+	values (@FirstName, @LastName , 'Customer' , @Email , @Password , @Address , @City , @PhoneNumber , @CreatedDate);
 end
 end
 

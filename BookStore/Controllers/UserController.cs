@@ -48,7 +48,7 @@ namespace BookStore.Controllers
                 {
                     string MSMQ =   "\n First Name : " + Convert.ToString(user.FirstName) + 
                                     "\n Last Name : " + Convert.ToString(user.LastName) +
-                                    "\n User Role : " + Convert.ToString(user.UserRole) +
+                                    "\n User Role : " + Convert.ToString("Customer") +
                                     "\n Email : " + Convert.ToString(user.Email);
                     sender.Message(MSMQ);
                     return Ok(new { success = true, Message = "registration successfull" });
@@ -81,7 +81,7 @@ namespace BookStore.Controllers
                     UserRole = data.UserRole,
                     Email = data.Email,
                     Address = data.Address,
-                    City = data.Address,
+                    City = data.City,
                     PhoneNumber = data.PhoneNumber
                 };
                 

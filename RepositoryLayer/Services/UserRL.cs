@@ -40,7 +40,7 @@ namespace RepositoryLayer.Services
 
                     sqlCommand.Parameters.AddWithValue("@FirstName", user.FirstName);
                     sqlCommand.Parameters.AddWithValue("@LastName", user.LastName);
-                    sqlCommand.Parameters.AddWithValue("@UserRole", user.UserRole);
+                    //sqlCommand.Parameters.AddWithValue("@UserRole", user.UserRole);
                     sqlCommand.Parameters.AddWithValue("@Email", user.Email);
                     sqlCommand.Parameters.AddWithValue("@Password", Password);
                     sqlCommand.Parameters.AddWithValue("@Address", user.Address);

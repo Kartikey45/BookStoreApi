@@ -16,8 +16,8 @@ namespace CommonLayer.Models
         public string LastName { get; set; }
 
         //[Required]
-        [RegularExpression(@"^Customer|^customer|^CUSTOMER", ErrorMessage = "Invalid User Role , Only Customer can do the registration")]
-        public string UserRole { get; set; }
+        //[RegularExpression(@"^Customer|^customer|^CUSTOMER", ErrorMessage = "Invalid User Role , Only Customer can do the registration")]
+        //public string UserRole { get; set; }
 
         [Required]
         [RegularExpression(@"^[a-zA-Z0-9]{1,}([.]?[-]?[+]?[a-zA-Z0-9]{1,})?[@]{1}[a-zA-Z0-9]{1,}[.]{1}[a-z]{2,3}([.]?[a-z]{2})?$", ErrorMessage = "Invalid Email Id")]
@@ -34,7 +34,7 @@ namespace CommonLayer.Models
         public string City { get; set; }
 
         //[Required]
-        [Phone]
+        //[Phone]
         public string PhoneNumber { get; set; }
 
         public DateTime CreatedDate { get; set; }
