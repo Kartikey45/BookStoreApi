@@ -10,5 +10,8 @@ namespace BusinessLayer.Interface
     {
         //Method to add books in book store
         Response InsertBooks(BookStoreDetails details);
+
+        //Method to get all book details
+        List<BooksDetails> ViewAllBooks();
     }
 }

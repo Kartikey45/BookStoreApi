@@ -32,5 +32,18 @@ namespace BusinessLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public List<BooksDetails> ViewAllBooks()
+        {
+            try
+            {
+                var result = BookDetails.ViewAllBooks();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
