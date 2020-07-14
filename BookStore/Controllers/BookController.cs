@@ -52,7 +52,7 @@ namespace BookStore.Controllers
         }
 
         //Method to update book details
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("{BookId}")]
         public IActionResult UpdateBooksDetails(int BookId, UpdateBookDetails details)
@@ -74,7 +74,6 @@ namespace BookStore.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
-
 
         //Method to Get all Books details
         [HttpGet]
