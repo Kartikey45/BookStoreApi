@@ -122,6 +122,53 @@ namespace RepositoryLayer.Services
             }
         }
 
+        //Method to sort By book details
+        public List<Sort> SortByBookDetails(string columnName, string order)
+        {
+            List<Sort> list = new List<Sort>(); 
+            try
+            {
+                //Connection string declared
+                string connect = Configuration.GetConnectionString("MyConnection");
+
+                using (SqlConnection Connection = new SqlConnection(connect))
+                {
+                    //Calling stored procedure
+                    SqlCommand sqlCommand = new SqlCommand("SortedBooksDetails", Connection);
+
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    //Connection open
+                    Connection.Open();
+
+                    //Read the data by using sql command
+                    SqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        Sort sort = new Sort();
+                        sort.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
+                        sort.Title = dataReader["Title"].ToString();
+                        sort.Description = dataReader["Description"].ToString();
+                        sort.Author = dataReader["Author"].ToString();
+                        sort.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
+                        sort.Price = Convert.ToDouble(dataReader["Price"].ToString());
+                        sort.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+                        sort.CreatedDate = Convert.ToDateTime(dataReader["ModifiedDate"].ToString());
+                        list.Add(sort);
+                    }
+
+                    //Connection close
+                    Connection.Close();
+                }
+                return list;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         //method to search book
         public BooksDetails BookSearch(string search)
         {

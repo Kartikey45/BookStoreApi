@@ -47,6 +47,20 @@ namespace BusinessLayer.Services
             }
         }
 
+        //Method to sort By book details
+        public List<Sort> SortByBookDetails(string columnName, string order)
+        {
+            try
+            {
+                var data = BookDetails.SortByBookDetails(columnName, order);
+                return data;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         //Delete Book By Id
         public Response DeleteBook(int BookId)
         {

@@ -22,5 +22,8 @@ namespace BusinessLayer.Interface
 
         //Method to search book 
         BooksDetails BookSearch(string search);
+
+        //Method to sort By book details
+        List<Sort> SortByBookDetails(string columnName, string order);
     }
 }

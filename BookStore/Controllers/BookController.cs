@@ -98,6 +98,29 @@ namespace BookStore.Controllers
             }
         }
 
+        //Method to sort By book details
+        [HttpGet]
+        [Route("Sort")]
+        public IActionResult SortByBookDetails(string columnName, string order)
+        {
+            try
+            {
+                var data = BookDetails.SortByBookDetails(columnName, order);
+                if(data != null)
+                {
+                    return Ok(new { success = true, message = "Successfull", Data = data});
+                }
+                else
+                {
+                    return Ok(new { success = false, message = "failed" });
+                }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
         //Method to search book
         [HttpGet]
         [Route("{Search}")]
