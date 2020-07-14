@@ -19,5 +19,9 @@ namespace RepositoryLayer.Interface
 
         //Method to update book
         Response UpdateBooks(int BookId, UpdateBookDetails details);
+
+        //Method to search book 
+        BooksDetails BookSearch(string search);
+
     }
 }

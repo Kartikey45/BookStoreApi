@@ -98,6 +98,29 @@ namespace BookStore.Controllers
             }
         }
 
+        //Method to search book
+        [HttpGet]
+        [Route("{Search}")]
+        public IActionResult BookSearch(string Search)
+        {
+            try
+            {
+                var data = BookDetails.BookSearch(Search);
+                if ( data.Author != null)
+                {
+                    return Ok(new { success = true, message = "found", Data = data });
+                }
+                else
+                {
+                    return Ok(new { success = false, message = "not found" });
+                }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
         //Method to delete Book by id
         [Authorize(Roles = "Admin")]
         [HttpDelete]

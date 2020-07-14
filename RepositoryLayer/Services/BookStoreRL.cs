@@ -122,6 +122,45 @@ namespace RepositoryLayer.Services
             }
         }
 
+        //method to search book
+        public BooksDetails BookSearch(string search)
+        {
+            //Create instance of Model class
+            BooksDetails details = new BooksDetails();
+            try
+            {
+                //Connection string declared
+                string connect = Configuration.GetConnectionString("MyConnection");
+
+                using (SqlConnection Connection = new SqlConnection(connect))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("BookSearch", Connection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.AddWithValue("@search", search);
+                    //sqlCommand.Parameters.AddWithValue("@Description", search.Description);
+                    //sqlCommand.Parameters.AddWithValue("@Author", search.Description);
+
+                    Connection.Open();
+                    SqlDataReader dataReader = sqlCommand.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        details.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
+                        details.Title = dataReader["Title"].ToString();
+                        details.Description = dataReader["Description"].ToString();
+                        details.Author = dataReader["Author"].ToString();
+                        details.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
+                        details.Price = Convert.ToDouble(dataReader["Price"].ToString());
+                    }
+                }
+                return details;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         //Method to delete book By id
         public Response DeleteBook(int BookId)
         {
@@ -228,5 +267,7 @@ namespace RepositoryLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+       
     }
 }

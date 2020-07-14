@@ -74,5 +74,19 @@ namespace BusinessLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        //Method to serach book
+        public BooksDetails BookSearch(string search)
+        {
+            try
+            {
+                var data = BookDetails.BookSearch(search);
+                return data;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -19,5 +19,8 @@ namespace BusinessLayer.Interface
 
         //Method to update Book details
         Response UpdateBooks(int BookId, UpdateBookDetails details);
+
+        //Method to search book 
+        BooksDetails BookSearch(string search);
     }
 }
