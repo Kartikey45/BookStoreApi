@@ -105,7 +105,9 @@ namespace RepositoryLayer.Services
 
                     //Execute query
                     status = sqlCommand.ExecuteNonQuery();
-                    */ 
+                    */
+
+                    var temp = details.Email;
 
                     //read data form the database
                     SqlDataReader reader = sqlCommand.ExecuteReader();
@@ -119,6 +121,7 @@ namespace RepositoryLayer.Services
                         details.LastName = reader["LastName"].ToString();
                         details.UserRole = reader["UserRole"].ToString();
                         details.Email = reader["Email"].ToString();
+                        temp = details.Email;
                         //details.Password = reader["Password"].ToString();
                         details.Address = reader["Address"].ToString();
                         details.City = reader["City"].ToString();
@@ -129,6 +132,11 @@ namespace RepositoryLayer.Services
 
                     //connection close 
                     Connection.Close();
+
+                    if(temp == null)
+                    {
+                        details = null;
+                    }
 
                     /*
                     //validation

@@ -38,7 +38,6 @@ end
 
 ##
 create procedure UserLogin
-@UserRole varchar(255),
 @Email varchar(255),
 @Password varchar(255)
 as

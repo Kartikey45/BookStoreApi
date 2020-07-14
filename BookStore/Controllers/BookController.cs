@@ -51,6 +51,31 @@ namespace BookStore.Controllers
             }
         }
 
+        //Method to update book details
+        //[Authorize(Roles = "Admin")]
+        [HttpPut]
+        [Route("{BookId}")]
+        public IActionResult UpdateBooksDetails(int BookId, UpdateBookDetails details)
+        {
+            try
+            {
+                var data = BookDetails.UpdateBooks(BookId, details);
+                if(data.Status == "failed")
+                {
+                    return Ok(new { success = false, messsage = "failed to update data" });
+                }
+                else
+                {
+                    return Ok(new { success = true, messsage = "successfully updated" });
+                }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+
         //Method to Get all Books details
         [HttpGet]
         [Route("")]
@@ -97,5 +122,6 @@ namespace BookStore.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+
     }
 }

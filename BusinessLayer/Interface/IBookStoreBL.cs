@@ -16,5 +16,8 @@ namespace BusinessLayer.Interface
 
         //Method to Delete Book details
         Response DeleteBook(int BookId);
+
+        //Method to update Book details
+        Response UpdateBooks(int BookId, UpdateBookDetails details);
     }
 }

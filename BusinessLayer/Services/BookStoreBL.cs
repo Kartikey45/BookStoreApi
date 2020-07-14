@@ -61,5 +61,18 @@ namespace BusinessLayer.Services
             }
         }
 
+        //Method to update book
+        public Response UpdateBooks(int BookId, UpdateBookDetails details)
+        {
+            try
+            {
+                var data = BookDetails.UpdateBooks(BookId, details);
+                return data;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

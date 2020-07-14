@@ -16,5 +16,8 @@ namespace RepositoryLayer.Interface
 
         //Method to Delete Book details
         Response DeleteBook(int BookId);
+
+        //Method to update book
+        Response UpdateBooks(int BookId, UpdateBookDetails details);
     }
 }

@@ -160,5 +160,73 @@ namespace RepositoryLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        //Method to update book
+        public Response UpdateBooks(int BookId, UpdateBookDetails details)
+        {
+            UpdateBookDetails data = new UpdateBookDetails();
+            Response response = new Response();
+            try
+            {
+                //Connection string declared
+                string connect = Configuration.GetConnectionString("MyConnection");
+
+                DateTime modifiedDate = details.ModifiedDate;
+                modifiedDate = DateTime.Now;
+
+                using (SqlConnection Connection = new SqlConnection(connect))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("UpdatBookDetails", Connection);
+
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@BookId", BookId);
+                    sqlCommand.Parameters.AddWithValue("@Title", details.Title);
+                    sqlCommand.Parameters.AddWithValue("@Description", details.Description);
+                    sqlCommand.Parameters.AddWithValue("@Author", details.Author);
+                    sqlCommand.Parameters.AddWithValue("@BooksAvailable", details.BooksAvailable);
+                    sqlCommand.Parameters.AddWithValue("@Price", details.Price);
+                    sqlCommand.Parameters.AddWithValue("@ModifiedDate", modifiedDate);
+
+                    //connection open 
+                    Connection.Open();
+
+                    int status = 0;
+
+                    //Execute query
+                    status = sqlCommand.ExecuteNonQuery();
+
+                    
+                    if (status == 1)
+                    {
+                        response.Status = "successfull";
+                    }
+                    else
+                    {
+                        response.Status = "failed";
+                    }
+                    
+                    //Read the data by using sql command
+                    SqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        data.Title = dataReader["Title"].ToString();
+                        data.Description = dataReader["Description"].ToString();
+                        data.Author = dataReader["Author"].ToString();
+                        data.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
+                        data.Price = Convert.ToDouble(dataReader["Price"].ToString());
+                        data.ModifiedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+                    }
+
+                    //connection close
+                    Connection.Close();
+                }
+                return response;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
