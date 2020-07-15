@@ -117,7 +117,8 @@ namespace BookStore.Controllers
                 var claims = new List<Claim>();
                 claims.Add(new Claim(ClaimTypes.Role, responseData.UserRole));
                 claims.Add(new Claim("Email", responseData.Email.ToString()));
-                //claims.Add(new Claim("UserId", responseData.UserId.ToString()));
+                claims.Add(new Claim("UserId", responseData.UserId.ToString()));
+                claims.Add(new Claim("TokenType", type));
                 claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
                 var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],

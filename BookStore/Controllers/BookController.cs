@@ -106,7 +106,6 @@ namespace BookStore.Controllers
             try
             {
                 var data = BookDetails.SortByBookDetails(columnName, order);
-                //return Ok(new { success = true, message = "Successfull", Data = data });
                 
                 if(data != null)
                 {

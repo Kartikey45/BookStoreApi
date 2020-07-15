@@ -38,6 +38,8 @@ namespace BookStore
             services.AddTransient<IUserBL, UserBL>();
             services.AddTransient<IBookStoreBL, BookStoreBL>();
             services.AddTransient<IBookStoreRL, BookStoreRL>();
+            services.AddTransient<ICartBL, CartBL>();
+            services.AddTransient<ICartRL, CartRL>();
 
             //JWT Autentication applied
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
