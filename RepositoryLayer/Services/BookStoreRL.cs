@@ -137,6 +137,8 @@ namespace RepositoryLayer.Services
                     SqlCommand sqlCommand = new SqlCommand("SortedBooksDetails", Connection);
 
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@SortCol", columnName);
+                    sqlCommand.Parameters.AddWithValue("@SortDir", order);
 
                     //Connection open
                     Connection.Open();
@@ -153,8 +155,8 @@ namespace RepositoryLayer.Services
                         sort.Author = dataReader["Author"].ToString();
                         sort.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
                         sort.Price = Convert.ToDouble(dataReader["Price"].ToString());
-                        sort.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
-                        sort.CreatedDate = Convert.ToDateTime(dataReader["ModifiedDate"].ToString());
+                        //sort.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+                        //sort.ModifiedDate = Convert.ToDateTime(dataReader["ModifiedDate"].ToString());
                         list.Add(sort);
                     }
 
@@ -314,7 +316,5 @@ namespace RepositoryLayer.Services
                 throw new Exception(ex.Message);
             }
         }
-
-       
     }
 }

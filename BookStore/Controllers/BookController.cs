@@ -100,20 +100,23 @@ namespace BookStore.Controllers
 
         //Method to sort By book details
         [HttpGet]
-        [Route("Sort")]
+        [Route("{columnName} {order}")]
         public IActionResult SortByBookDetails(string columnName, string order)
         {
             try
             {
                 var data = BookDetails.SortByBookDetails(columnName, order);
+                //return Ok(new { success = true, message = "Successfull", Data = data });
+                
                 if(data != null)
                 {
                     return Ok(new { success = true, message = "Successfull", Data = data});
                 }
                 else
                 {
-                    return Ok(new { success = false, message = "failed" });
+                    return NotFound(new { success = false, message = "failed" });
                 }
+                
             }
             catch(Exception ex)
             {
