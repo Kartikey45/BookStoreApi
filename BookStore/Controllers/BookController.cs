@@ -36,13 +36,13 @@ namespace BookStore.Controllers
             try
             {
                 var data = BookDetails.InsertBooks(details);
-                if (data.Status == "Invalid")
+                if (data.Title != null)
                 {
-                    return Ok(new { success = false, Message = "Books are already in the slot" });
+                    return Ok(new { success = true, Message = "Book Inserted successfully", Data = data });   
                 }
                 else
                 {
-                    return Ok(new { success = true, Message = "Book Inserted" });
+                    return Conflict(new { success = false, Message = "Failed to insert" });
                 }
             }
             catch (Exception ex)
@@ -60,13 +60,13 @@ namespace BookStore.Controllers
             try
             {
                 var data = BookDetails.UpdateBooks(BookId, details);
-                if(data.Status == "failed")
+                if(data.Title != null)
                 {
-                    return Ok(new { success = false, messsage = "failed to update data" });
+                    return Ok(new { success = true, messsage = "successfully updated", Data = data});
                 }
                 else
                 {
-                    return Ok(new { success = true, messsage = "successfully updated" });
+                    return Conflict(new { success = false, messsage = "failed to update" });
                 }
             }
             catch(Exception ex)
@@ -100,7 +100,7 @@ namespace BookStore.Controllers
 
         //Method to sort By book details
         [HttpGet]
-        [Route("{columnName} {order}")]
+        [Route("{columnName}/SortBy/{order}")]
         public IActionResult SortByBookDetails(string columnName, string order)
         {
             try
@@ -155,8 +155,13 @@ namespace BookStore.Controllers
         {
             try
             {
+                if(BookId < 0)
+                {
+                    throw new Exception("Invalid Id");
+                }
+
                 var data = BookDetails.DeleteBook(BookId);
-                if(data.Status == "Not Deleted")
+                if (data.Status == "Not Deleted")
                 {
                     return Ok(new { success = false, Message = "Failed to delete" });
                 }
@@ -165,7 +170,7 @@ namespace BookStore.Controllers
                     return Ok(new { success = true, Message = "deleted successfully" });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(new { success = false, message = ex.Message });
             }

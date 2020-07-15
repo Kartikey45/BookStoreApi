@@ -34,7 +34,7 @@ namespace BusinessLayer.Services
         }
 
         //Method to register user details
-        public Response Registration(UserRegistration user)
+        public UserDetails Registration(UserRegistration user)
         {
             try
             {

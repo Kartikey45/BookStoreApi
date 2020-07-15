@@ -21,9 +21,9 @@ namespace RepositoryLayer.Services
         }
 
         //Method to insert books
-        public Response InsertBooks(BookStoreDetails details)
+        public BooksDetails InsertBooks(BookStoreDetails details)
         {
-            Response response = new Response();
+            BooksDetails data = new BooksDetails();
 
             try
             {
@@ -48,14 +48,29 @@ namespace RepositoryLayer.Services
                     //connection open
                     Connection.Open();
 
-                    int status = 0;
+                    //int status = 0;
 
-                    //Execute query
-                    status = sqlCommand.ExecuteNonQuery();
+                    
+                    //Read the data by using sql command
+                    SqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        
+                        data.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
+                        data.Title = dataReader["Title"].ToString();
+                        data.Description = dataReader["Description"].ToString();
+                        data.Author = dataReader["Author"].ToString();
+                        data.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
+                        data.Price = Convert.ToDouble(dataReader["Price"].ToString());
+                        data.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+                        
+                    }
 
                     //connection close
                     Connection.Close();
 
+                    /*
                     //validation
                     if (status == 1)
                     {
@@ -65,8 +80,9 @@ namespace RepositoryLayer.Services
                     {
                         response.Status = "Invalid";
                     }
+                    */
                 }
-                return response;
+                return data;
             }
             catch(Exception ex)
             {
@@ -128,6 +144,7 @@ namespace RepositoryLayer.Services
             List<Sort> list = new List<Sort>(); 
             try
             {
+
                 //Connection string declared
                 string connect = Configuration.GetConnectionString("MyConnection");
 
@@ -213,7 +230,7 @@ namespace RepositoryLayer.Services
         //Method to delete book By id
         public Response DeleteBook(int BookId)
         {
-            Response response = new Response(); 
+            Response response = new Response();
             try
             {
                 //Connection string declared
@@ -232,7 +249,7 @@ namespace RepositoryLayer.Services
                     data = sqlCommand.ExecuteNonQuery();
                     Connection.Close();
 
-                    if(data == 1)
+                    if (data == 1)
                     {
                         response.Status = "Deleted";
                     }
@@ -243,17 +260,17 @@ namespace RepositoryLayer.Services
                 }
                 return response;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
 
         //Method to update book
-        public Response UpdateBooks(int BookId, UpdateBookDetails details)
+        public BooksDetails UpdateBooks(int BookId, UpdateBookDetails details)
         {
-            UpdateBookDetails data = new UpdateBookDetails();
-            Response response = new Response();
+            BooksDetails data = new BooksDetails();
+            
             try
             {
                 //Connection string declared
@@ -278,38 +295,30 @@ namespace RepositoryLayer.Services
                     //connection open 
                     Connection.Open();
 
-                    int status = 0;
-
-                    //Execute query
-                    status = sqlCommand.ExecuteNonQuery();
+                   
 
                     
-                    if (status == 1)
-                    {
-                        response.Status = "successfull";
-                    }
-                    else
-                    {
-                        response.Status = "failed";
-                    }
-                    
+
                     //Read the data by using sql command
                     SqlDataReader dataReader = sqlCommand.ExecuteReader();
 
                     while (dataReader.Read())
                     {
+
+                        data.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
                         data.Title = dataReader["Title"].ToString();
                         data.Description = dataReader["Description"].ToString();
                         data.Author = dataReader["Author"].ToString();
                         data.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
                         data.Price = Convert.ToDouble(dataReader["Price"].ToString());
-                        data.ModifiedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+                        //data.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+
                     }
 
                     //connection close
                     Connection.Close();
                 }
-                return response;
+                return data;
             }
             catch(Exception ex)
             {

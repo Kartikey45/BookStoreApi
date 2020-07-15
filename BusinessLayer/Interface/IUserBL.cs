@@ -8,7 +8,7 @@ namespace BusinessLayer.Interface
     public interface IUserBL
     {
          //Method to register user details
-         Response Registration(UserRegistration user);
+         UserDetails Registration(UserRegistration user);
 
         //Method for user login
         UserDetails Login(UserLogin user);

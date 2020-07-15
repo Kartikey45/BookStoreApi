@@ -20,9 +20,9 @@ namespace RepositoryLayer.Services
         }
 
         //Method to register user in the dataabase
-        public Response Registration(UserRegistration user)
+        public UserDetails Registration(UserRegistration user)
         {
-            Response response = new Response();
+            UserDetails details = new UserDetails();
             try
             {
                 //Connection string declared
@@ -51,14 +51,32 @@ namespace RepositoryLayer.Services
                     //connection open 
                     Connection.Open();
 
-                    int status = 0;
+                    //int status = 0;
 
-                    //Execute query
-                    status = sqlCommand.ExecuteNonQuery();
+                    // Read data form database
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                    //While Loop For Reading status result from SqlDataReader.
+                    while (reader.Read())
+                    {
+                        details.UserId = Convert.ToInt32(reader["UserId"].ToString());
+                        details.FirstName = reader["FirstName"].ToString();
+                        details.LastName = reader["LastName"].ToString();
+                        details.UserRole = reader["UserRole"].ToString();
+                        details.Email = reader["Email"].ToString();
+                        //temp = details.Email;
+                        //details.Password = reader["Password"].ToString();
+                        details.Address = reader["Address"].ToString();
+                        details.City = reader["City"].ToString();
+                        details.PhoneNumber = reader["PhoneNumber"].ToString();
+                        //details.CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString());
+                        //details.ModifiedDate = Convert.ToDateTime(reader["ModifiedDate"].ToString());
+                    }
 
                     //connection close
                     Connection.Close();
 
+                    /*
                     //validation
                     if (status == 1)
                     {
@@ -68,8 +86,9 @@ namespace RepositoryLayer.Services
                     {
                         response.Status = "Invalid Email";
                     }
+                    */
                 }
-                return response;
+                return details;
             }
             catch(Exception ex)
             {
@@ -107,7 +126,7 @@ namespace RepositoryLayer.Services
                     status = sqlCommand.ExecuteNonQuery();
                     */
 
-                    var temp = details.Email;
+                    //var temp = details.Email;
 
                     //read data form the database
                     SqlDataReader reader = sqlCommand.ExecuteReader();
@@ -121,7 +140,7 @@ namespace RepositoryLayer.Services
                         details.LastName = reader["LastName"].ToString();
                         details.UserRole = reader["UserRole"].ToString();
                         details.Email = reader["Email"].ToString();
-                        temp = details.Email;
+                        //temp = details.Email;
                         //details.Password = reader["Password"].ToString();
                         details.Address = reader["Address"].ToString();
                         details.City = reader["City"].ToString();
@@ -133,11 +152,12 @@ namespace RepositoryLayer.Services
                     //connection close 
                     Connection.Close();
 
+                    /*
                     if(temp == null)
                     {
                         details = null;
                     }
-
+                    */
                     /*
                     //validation
                     if (status == 1)
@@ -149,6 +169,7 @@ namespace RepositoryLayer.Services
                         details.Status = "Invalid Email";
                     }
                     */
+                    /*
                     if(details == null)
                     {
                         throw new Exception();
@@ -157,7 +178,9 @@ namespace RepositoryLayer.Services
                     {
                         return details;
                     }
+                    */
                 }
+                return details;
             }
             catch(Exception ex)
             {

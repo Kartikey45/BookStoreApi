@@ -40,18 +40,18 @@ namespace BookStore.Controllers
             try
             {
                 var data = UserBl.Registration(user);
-                if (data.Status == "Invalid Email")
+                if (data.Email != null)
                 {
-                    return Ok(new { success = false, Message = "registration failed" });
-                }
-                else
-                {
-                    string MSMQ =   "\n First Name : " + Convert.ToString(user.FirstName) + 
+                    string MSMQ = "\n First Name : " + Convert.ToString(user.FirstName) +
                                     "\n Last Name : " + Convert.ToString(user.LastName) +
                                     "\n User Role : " + Convert.ToString("Customer") +
                                     "\n Email : " + Convert.ToString(user.Email);
                     sender.Message(MSMQ);
-                    return Ok(new { success = true, Message = "registration successfull" });
+                    return Ok(new { success = true, Message = "registration successfull", Data = data });
+                }
+                else
+                {
+                    return Conflict(new { success = false, Message = "registration failed" });
                 }
             }
             catch(Exception ex)
@@ -68,7 +68,7 @@ namespace BookStore.Controllers
             try
             {
                 UserDetails data = UserBl.Login(login);
-                string JsonToken = CreateToken(data, "AuthenticateUserRole");
+                
                 bool success = false;
                 string message;
                 UserDetails DATA;
@@ -85,18 +85,19 @@ namespace BookStore.Controllers
                     PhoneNumber = data.PhoneNumber
                 };
                 
-                if (data == null )
+                if (data.Email != null )
                 {
-                    message = "Enter Valid Email & Password";
-                    //DATA = login;
-                    return Ok(new { success , message });
-                }
-                else
-                {
+                    string JsonToken = CreateToken(data, "AuthenticateUserRole");
                     success = true;
                     message = "Login Successfully";
                     DATA = Data;
-                    return Ok(new { success , message, DATA, JsonToken });
+                    return Ok(new { success, message, DATA, JsonToken });
+                }
+                else
+                {
+                    message = "Enter Valid Email & Password";
+                    //DATA = login;
+                    return NotFound(new { success, message });
                 }
             }
             catch(Exception ex)

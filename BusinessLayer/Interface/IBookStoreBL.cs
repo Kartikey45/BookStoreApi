@@ -9,7 +9,7 @@ namespace BusinessLayer.Interface
     public interface IBookStoreBL
     {
         //Method to add books in book store
-        Response InsertBooks(BookStoreDetails details);
+        BooksDetails InsertBooks(BookStoreDetails details);
 
         //Method to get all book details
         List<BooksDetails> ViewAllBooks();
@@ -18,7 +18,7 @@ namespace BusinessLayer.Interface
         Response DeleteBook(int BookId);
 
         //Method to update Book details
-        Response UpdateBooks(int BookId, UpdateBookDetails details);
+        BooksDetails UpdateBooks(int BookId, UpdateBookDetails details);
 
         //Method to search book 
         BooksDetails BookSearch(string search);

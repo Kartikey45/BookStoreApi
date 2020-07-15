@@ -20,7 +20,7 @@ namespace BusinessLayer.Services
         }
 
         //Method to insert book
-        public Response InsertBooks(BookStoreDetails details)
+        public BooksDetails InsertBooks(BookStoreDetails details)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace BusinessLayer.Services
         }
 
         //Method to update book
-        public Response UpdateBooks(int BookId, UpdateBookDetails details)
+        public BooksDetails UpdateBooks(int BookId, UpdateBookDetails details)
         {
             try
             {

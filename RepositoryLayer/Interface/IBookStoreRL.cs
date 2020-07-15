@@ -9,7 +9,7 @@ namespace RepositoryLayer.Interface
     public interface IBookStoreRL
     {
         //Method to add books in book store
-        Response InsertBooks(BookStoreDetails details);
+        BooksDetails InsertBooks(BookStoreDetails details);
 
         //Method to get all book details
         List<BooksDetails> ViewAllBooks();
@@ -18,7 +18,7 @@ namespace RepositoryLayer.Interface
         Response DeleteBook(int BookId);
 
         //Method to update book
-        Response UpdateBooks(int BookId, UpdateBookDetails details);
+        BooksDetails UpdateBooks(int BookId, UpdateBookDetails details);
 
         //Method to search book 
         BooksDetails BookSearch(string search);
