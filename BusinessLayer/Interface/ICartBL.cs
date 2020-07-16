@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using CommonLayer.Models;
 
 namespace BusinessLayer.Interface
 {
@@ -10,7 +11,10 @@ namespace BusinessLayer.Interface
         // Add to cart
         AddToCartDetails AddToCart(int UserId, int BookId);
 
-        // view form cart
+        // view from cart
         List<CustomerCartDetails> ViewCartDetails(int UserId);
+
+        //Delete cart details
+        Response DeleteFromCart(int UserId, int CartId);
     }
 }

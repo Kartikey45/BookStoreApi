@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.CartModel;
+using CommonLayer.Models;
 using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
@@ -43,5 +44,19 @@ namespace BusinessLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public Response DeleteFromCart(int UserId, int CartId)
+        {
+            try
+            {
+                var data = cartRL.DeleteFromCart(UserId, CartId);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

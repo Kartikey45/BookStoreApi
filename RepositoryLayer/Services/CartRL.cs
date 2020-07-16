@@ -1,4 +1,5 @@
 ﻿using CommonLayer.CartModel;
+using CommonLayer.Models;
 using Microsoft.Extensions.Configuration;
 using RepositoryLayer.Interface;
 using System;
@@ -103,6 +104,45 @@ namespace RepositoryLayer.Services
                     Connection.Close();
                 }
                 return list;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public Response DeleteFromCart(int UserId, int CartId)
+        {
+            Response response = new Response();
+            try
+            {
+                //Connection string declared
+                string connect = Configuration.GetConnectionString("MyConnection");
+
+                using (SqlConnection Connection = new SqlConnection(connect))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("DeleteFromCartById", Connection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@UserId", UserId);
+                    sqlCommand.Parameters.AddWithValue("@CartId", CartId);
+
+                    Connection.Open();
+
+                    int data = 0;
+
+                    data = sqlCommand.ExecuteNonQuery();
+                    Connection.Close();
+
+                    if (data == 1)
+                    {
+                        response.Status = "Deleted";
+                    }
+                    else
+                    {
+                        response.Status = "Not Deleted";
+                    }
+                }
+                return response;
             }
             catch(Exception ex)
             {

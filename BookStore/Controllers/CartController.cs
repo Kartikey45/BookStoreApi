@@ -72,5 +72,34 @@ namespace BookStore.Controllers
                 return BadRequest(new { succcess = false, message = ex.Message });
             }
         }
+
+        [HttpDelete]
+        [Authorize(Roles = "Customer")]
+        [Route("{CartId}")]
+        public IActionResult DeleteFromCart(int CartId)
+        {
+            try
+            {
+                if (CartId < 0)
+                {
+                    throw new Exception("Invalid Id");
+                }
+                var user = HttpContext.User;
+                int UserId = Convert.ToInt32(user.Claims.FirstOrDefault(u => u.Type == "UserId").Value);
+                var data = cartBL.DeleteFromCart(UserId, CartId);
+                if (data.Status == "Not Deleted")
+                {
+                    return Ok(new { success = false, Message = "Failed to delete" });
+                }
+                else
+                {
+                    return Ok(new { success = true, Message = "deleted successfully" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { succcess = false, message = ex.Message });
+            }
+        }
     }
 }
