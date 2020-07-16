@@ -37,6 +37,6 @@ namespace CommonLayer.Models
         //[Phone]
         public string PhoneNumber { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        //public DateTime CreatedDate { get; set; }
     }
 }

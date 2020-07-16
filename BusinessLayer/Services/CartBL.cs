@@ -30,5 +30,18 @@ namespace BusinessLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public List<CustomerCartDetails> ViewCartDetails(int UserId)
+        {
+            try
+            {
+                var data = cartRL.ViewCartDetails(UserId);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

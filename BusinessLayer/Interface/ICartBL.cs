@@ -9,5 +9,8 @@ namespace BusinessLayer.Interface
     {
         // Add to cart
         AddToCartDetails AddToCart(int UserId, int BookId);
+
+        // view form cart
+        List<CustomerCartDetails> ViewCartDetails(int UserId);
     }
 }

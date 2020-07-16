@@ -42,11 +42,13 @@ namespace BookStore.Controllers
                 var data = UserBl.Registration(user);
                 if (data.Email != null)
                 {
+                    
                     string MSMQ = "\n First Name : " + Convert.ToString(user.FirstName) +
                                     "\n Last Name : " + Convert.ToString(user.LastName) +
                                     "\n User Role : " + Convert.ToString("Customer") +
                                     "\n Email : " + Convert.ToString(user.Email);
                     sender.Message(MSMQ);
+                    
                     return Ok(new { success = true, Message = "registration successfull", Data = data });
                 }
                 else

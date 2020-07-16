@@ -64,5 +64,50 @@ namespace RepositoryLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        //View Cart details by UserId
+        public List<CustomerCartDetails> ViewCartDetails(int UserId)
+        {
+            List<CustomerCartDetails> list = new List<CustomerCartDetails>();
+            try
+            {
+                //Connection string declared
+                string connect = Configuration.GetConnectionString("MyConnection");
+
+                using (SqlConnection Connection = new SqlConnection(connect))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("ViewCartById", Connection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.AddWithValue("@UserId", UserId);
+
+                    //connection open 
+                    Connection.Open();
+
+                    // Read data form database
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                    //While Loop For Reading status result from SqlDataReader.
+                    while (reader.Read())
+                    {
+                        CustomerCartDetails cart = new CustomerCartDetails();
+                        cart.CartId = Convert.ToInt32(reader["CartId"].ToString());
+                        cart.BookId = Convert.ToInt32(reader["BookId"].ToString());
+                        cart.Title = reader["Title"].ToString();
+                        cart.Author = reader["Author"].ToString();
+                        cart.Price = Convert.ToDouble(reader["Price"].ToString());
+                        list.Add(cart);
+                    }
+
+                    //Connection close
+                    Connection.Close();
+                }
+                return list;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

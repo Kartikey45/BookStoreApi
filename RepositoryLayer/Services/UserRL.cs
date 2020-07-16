@@ -30,7 +30,7 @@ namespace RepositoryLayer.Services
 
                 //password encrypted
                 string Password = EncryptedPassword.EncodePasswordToBase64(user.Password);
-                DateTime createdDate = user.CreatedDate;
+                DateTime createdDate;
                 createdDate = DateTime.Now;
 
                 using (SqlConnection Connection = new SqlConnection(connect))

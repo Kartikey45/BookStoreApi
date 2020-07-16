@@ -18,13 +18,13 @@ namespace BookStore.Controllers
     {
         //Variable declared
         private readonly IBookStoreBL BookDetails;
-        private readonly IConfiguration _configuration;
+        //private readonly IConfiguration _configuration;
 
         //Constructor 
-        public BookController(IBookStoreBL BookDetails, IConfiguration _configuration)
+        public BookController(IBookStoreBL BookDetails )
         {
             this.BookDetails = BookDetails;
-            this._configuration = _configuration;
+           
         }
 
         //Method to register Book details 
