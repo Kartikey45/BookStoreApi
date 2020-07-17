@@ -59,6 +59,11 @@ namespace BookStore.Controllers
         {
             try
             {
+                if(BookId < 0)
+                {
+                    throw new Exception("Invalid BookId");
+                }
+
                 var data = BookDetails.UpdateBooks(BookId, details);
                 if(data.Title != null)
                 {
@@ -115,7 +120,6 @@ namespace BookStore.Controllers
                 {
                     return NotFound(new { success = false, message = "failed" });
                 }
-                
             }
             catch(Exception ex)
             {
@@ -137,7 +141,7 @@ namespace BookStore.Controllers
                 }
                 else
                 {
-                    return Ok(new { success = false, message = "not found" });
+                    return NotFound(new { success = false, message = "not found" });
                 }
             }
             catch(Exception ex)
@@ -162,7 +166,7 @@ namespace BookStore.Controllers
                 var data = BookDetails.DeleteBook(BookId);
                 if (data.Status == "Not Deleted")
                 {
-                    return Ok(new { success = false, Message = "Failed to delete" });
+                    return NotFound(new { success = false, Message = "Failed to delete" });
                 }
                 else
                 {

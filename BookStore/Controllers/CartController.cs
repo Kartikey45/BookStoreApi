@@ -89,7 +89,7 @@ namespace BookStore.Controllers
                 var data = cartBL.DeleteFromCart(UserId, CartId);
                 if (data.Status == "Not Deleted")
                 {
-                    return Ok(new { success = false, Message = "Failed to delete" });
+                    return NotFound(new { success = false, Message = "Failed to delete" });
                 }
                 else
                 {

@@ -51,8 +51,6 @@ namespace RepositoryLayer.Services
                     //connection open 
                     Connection.Open();
 
-                    //int status = 0;
-
                     // Read data form database
                     SqlDataReader reader = sqlCommand.ExecuteReader();
 
@@ -76,17 +74,6 @@ namespace RepositoryLayer.Services
                     //connection close
                     Connection.Close();
 
-                    /*
-                    //validation
-                    if (status == 1)
-                    {
-                        response.Status = "Valid Email";
-                    }
-                    else
-                    {
-                        response.Status = "Invalid Email";
-                    }
-                    */
                 }
                 return details;
             }
@@ -119,15 +106,6 @@ namespace RepositoryLayer.Services
                     //connection open 
                     Connection.Open();
 
-                    /*
-                    int status = 0;
-
-                    //Execute query
-                    status = sqlCommand.ExecuteNonQuery();
-                    */
-
-                    //var temp = details.Email;
-
                     //read data form the database
                     SqlDataReader reader = sqlCommand.ExecuteReader();
                     
@@ -152,33 +130,6 @@ namespace RepositoryLayer.Services
                     //connection close 
                     Connection.Close();
 
-                    /*
-                    if(temp == null)
-                    {
-                        details = null;
-                    }
-                    */
-                    /*
-                    //validation
-                    if (status == 1)
-                    {
-                        details.Status = "Valid Email";
-                    }
-                    else
-                    {
-                        details.Status = "Invalid Email";
-                    }
-                    */
-                    /*
-                    if(details == null)
-                    {
-                        throw new Exception();
-                    }
-                    else
-                    {
-                        return details;
-                    }
-                    */
                 }
                 return details;
             }
