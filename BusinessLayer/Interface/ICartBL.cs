@@ -9,7 +9,7 @@ namespace BusinessLayer.Interface
     public interface ICartBL
     {
         // Add to cart
-        AddToCartDetails AddToCart(int UserId, int BookId);
+        AddToCartDetails AddToCart(int UserId, int BookId, int Quantity);
 
         // view from cart
         List<CustomerCartDetails> ViewCartDetails(int UserId);

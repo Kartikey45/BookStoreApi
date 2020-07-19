@@ -83,6 +83,7 @@ namespace BookStoreTestCases
             Assert.IsType<OkObjectResult>(result);
         }
 
+        //User registration returns conflict
         [Fact]
         public void UserRegistration_returns_Conflict()
         {
@@ -104,6 +105,7 @@ namespace BookStoreTestCases
             Assert.IsType<ConflictObjectResult>(result);
         }
 
+        //user login return ok result
         [Fact]
         public void UserLogin_returns_OkResult()
         {
@@ -120,6 +122,7 @@ namespace BookStoreTestCases
             Assert.IsType<OkObjectResult>(result);
         }
 
+        //userlogin returns not found
         [Fact]
         public void UserLogin_returns_NotFound()
         {
@@ -136,6 +139,7 @@ namespace BookStoreTestCases
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
+        //user login returns bad request
         [Fact]
         public void UserLogin_returns_BadRequest()
         {
@@ -152,6 +156,7 @@ namespace BookStoreTestCases
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
+        // insert book in book store returns ok result
         [Fact]
         public void InsertBookInBookStore_returns_Ok_Result()
         {
@@ -171,6 +176,7 @@ namespace BookStoreTestCases
             Assert.IsType<OkObjectResult>(result);
         }
 
+        // insert book in book store returns conflict
         [Fact]
         public void InsertBookInBookStore_Returns_Conflict()
         {
@@ -190,6 +196,7 @@ namespace BookStoreTestCases
             Assert.IsType<ConflictObjectResult>(result);
         }
 
+        // insert book in book store returns badRequest
         [Fact]
         public void InsertInValidAuthorNameBookInBookStore_returns_BadRequest()
         {
@@ -209,6 +216,7 @@ namespace BookStoreTestCases
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
+        // View all details returns ok result
         [Fact]
         public void ViewAllBookDetails_returns_OkResult()
         {
@@ -219,6 +227,7 @@ namespace BookStoreTestCases
             Assert.IsType<OkObjectResult>(result);
         }
 
+        //update book by id returns ok result
         [Fact]
         public void UpdateBookById_retursOkResult()
         {
@@ -239,6 +248,7 @@ namespace BookStoreTestCases
             Assert.IsType<OkObjectResult>(result);
         }
 
+        //update book by id returns conflict
         [Fact]
         public void UpdateBookById_returns_Conflict()
         {
@@ -259,6 +269,7 @@ namespace BookStoreTestCases
             Assert.IsType<ConflictObjectResult>(result);
         }
 
+        // update book by id returns  bad request
         [Fact]
         public void UpdateBookById_returns_BadRequest()
         {
@@ -279,6 +290,7 @@ namespace BookStoreTestCases
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
+        //Delete book by id returns ok result
         [Fact]
         public void DeleteBookById_returnsOkresult()
         {
@@ -289,6 +301,7 @@ namespace BookStoreTestCases
             Assert.IsType<OkObjectResult>(result);
         }
 
+        // Delete book by id returns bad request
         [Fact]
         public void DeleteBookById_RetunsBadRequest()
         {
@@ -299,6 +312,7 @@ namespace BookStoreTestCases
             Assert.IsType<BadRequestObjectResult>(result);
         }
 
+        //Delete book by id returns not found
         [Fact]
         public void DeleteBookById_RetunsNotFound()
         {
@@ -309,6 +323,7 @@ namespace BookStoreTestCases
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
+        // search book returns ok result
         [Fact]
         public void SearchBook_ReturnsOkResult()
         {
@@ -319,6 +334,7 @@ namespace BookStoreTestCases
             Assert.IsType<OkObjectResult>(result);
         }
 
+        //search book returns not found
         [Fact]
         public void SearchBook_returnsNotFound()
         {
@@ -329,6 +345,7 @@ namespace BookStoreTestCases
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
+        //Sorting Book returns ok result
         [Fact]
         public void SortBook_returnsOkResult()
         {
@@ -339,6 +356,7 @@ namespace BookStoreTestCases
             Assert.IsType<OkObjectResult>(result);
         }
 
+        //sorting book returns bad request
         [Fact]
         public void SortBook_returnsBadRequest()
         {

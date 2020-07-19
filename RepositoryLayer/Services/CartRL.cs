@@ -21,7 +21,7 @@ namespace RepositoryLayer.Services
         }
 
         // Add to cart
-        public AddToCartDetails AddToCart(int UserId, int BookId)
+        public AddToCartDetails AddToCart(int UserId, int BookId, int Quantity)
         {
             AddToCartDetails cart = new AddToCartDetails();
             try
@@ -36,6 +36,7 @@ namespace RepositoryLayer.Services
 
                     sqlCommand.Parameters.AddWithValue("@UserId", UserId);
                     sqlCommand.Parameters.AddWithValue("@BookId", BookId);
+                    sqlCommand.Parameters.AddWithValue("@Quantity", Quantity);
 
                     //connection open 
                     Connection.Open();
@@ -53,6 +54,7 @@ namespace RepositoryLayer.Services
                         cart.Description = reader["Description"].ToString();
                         cart.Author = reader["Author"].ToString();
                         cart.Price = Convert.ToDouble(reader["Price"].ToString());
+                        cart.Quantity = Convert.ToInt32(reader["Quantity"].ToString());
                     }
 
                     //connection close

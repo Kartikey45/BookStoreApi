@@ -19,11 +19,11 @@ namespace BusinessLayer.Services
             this.cartRL = cartRL;
         }
 
-        public AddToCartDetails AddToCart(int UserId, int BookId)
+        public AddToCartDetails AddToCart(int UserId, int BookId, int Quantity)
         {
             try
             {
-                var data = cartRL.AddToCart(UserId, BookId);
+                var data = cartRL.AddToCart(UserId, BookId, Quantity);
                 return data;
             }
             catch(Exception ex)

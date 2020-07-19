@@ -25,22 +25,27 @@ namespace BookStore.Controllers
         }
 
         [HttpPost]
-        [Route("{BookId}")]
+        [Route("{BookId}/{Quantity}")]
         [Authorize(Roles = "Customer")]
-        public IActionResult AddToCart(int BookId)
+        public IActionResult AddToCart(int BookId, int Quantity)
         {
             try
             {
+                if(BookId < 1)
+                {
+                    throw new Exception("Invalid Book Id");
+                }
+
                 var user = HttpContext.User;
                 int UserId = Convert.ToInt32(user.Claims.FirstOrDefault(u => u.Type == "UserId").Value);
-                var data = cartBL.AddToCart(UserId, BookId);
+                var data = cartBL.AddToCart(UserId, BookId, Quantity);
                 if (data.Title != null)
                 {
                     return Ok(new { success = true, message = "successfull", UserId, Data = data });
                 }
                 else
                 {
-                    return NotFound(new { success = false, message = "Data not found" });
+                    return NotFound(new { success = false, message = "Book is not available in store" });
                 }
             }
             catch (Exception ex)
@@ -82,7 +87,7 @@ namespace BookStore.Controllers
             {
                 if (CartId < 0)
                 {
-                    throw new Exception("Invalid Id");
+                    throw new Exception("Invalid Cart Id");
                 }
                 var user = HttpContext.User;
                 int UserId = Convert.ToInt32(user.Claims.FirstOrDefault(u => u.Type == "UserId").Value);
