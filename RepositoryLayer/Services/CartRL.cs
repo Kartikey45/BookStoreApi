@@ -99,6 +99,11 @@ namespace RepositoryLayer.Services
                         cart.Title = reader["Title"].ToString();
                         cart.Author = reader["Author"].ToString();
                         cart.Price = Convert.ToDouble(reader["Price"].ToString());
+                        cart.Quantity = Convert.ToInt32(reader["Quantity"].ToString());
+                        //cart.IsUsed = Convert.ToBoolean(reader["IsUsed"].ToString());
+                        //cart.IsDeleted = Convert.ToBoolean(reader["IsDeleted"].ToString());
+                        cart.DateCreated = Convert.ToDateTime(reader["DateCreated"].ToString());
+                        cart.DateModified = Convert.ToDateTime(reader["DateModified"].ToString());
                         list.Add(cart);
                     }
 

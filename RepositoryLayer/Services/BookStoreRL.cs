@@ -295,10 +295,6 @@ namespace RepositoryLayer.Services
                     //connection open 
                     Connection.Open();
 
-                   
-
-                    
-
                     //Read the data by using sql command
                     SqlDataReader dataReader = sqlCommand.ExecuteReader();
 

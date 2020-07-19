@@ -15,5 +15,15 @@ namespace CommonLayer.CartModel
         public string Author { get; set; }
 
         public double Price { get; set; }
+
+        public int Quantity { get; set; }
+
+        public Boolean IsUsed { get; set; }
+
+        public Boolean IsDeleted { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        public DateTime DateModified { get; set; }
     }
 }
