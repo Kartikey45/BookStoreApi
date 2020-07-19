@@ -42,7 +42,7 @@ namespace BookStore.Controllers
                 }
                 else
                 {
-                    return Conflict(new { success = false, Message = "Failed to insert" });
+                    return Conflict(new { success = false, Message = "This Book is Already registered" });
                 }
             }
             catch (Exception ex)

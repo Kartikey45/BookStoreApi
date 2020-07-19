@@ -70,17 +70,6 @@ namespace RepositoryLayer.Services
                     //connection close
                     Connection.Close();
 
-                    /*
-                    //validation
-                    if (status == 1)
-                    {
-                        response.Status = "Valid";
-                    }
-                    else
-                    {
-                        response.Status = "Invalid";
-                    }
-                    */
                 }
                 return data;
             }

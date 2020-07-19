@@ -14,7 +14,6 @@ namespace CommonLayer.BookStoreModel
         public string Description { get; set; }
 
         [Required]
-        [RegularExpression(@"^[A-Z][a-zA-Z]*$", ErrorMessage = "First Letter would be capital")]
         public string Author { get; set; }
 
         [Required]
