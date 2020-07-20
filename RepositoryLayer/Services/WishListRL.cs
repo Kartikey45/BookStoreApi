@@ -1,5 +1,5 @@
-﻿using CommonLayer.CartModel;
-using CommonLayer.Models;
+﻿using CommonLayer.Models;
+using CommonLayer.WishListModel;
 using Microsoft.Extensions.Configuration;
 using RepositoryLayer.Interface;
 using System;
@@ -9,21 +9,20 @@ using System.Text;
 
 namespace RepositoryLayer.Services
 {
-    public class CartRL : ICartRL
+    public class WishListRL : IWishListRL
     {
         //Configuration initialized
         private readonly IConfiguration Configuration;
 
         //constructor 
-        public CartRL(IConfiguration configuration)
+        public WishListRL(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        // Add to cart
-        public AddToCartDetails AddToCart(int UserId, int BookId, int Quantity)
+        public AddToWishListDetails AddToWishList(int UserId, int BookId, int Quantity)
         {
-            AddToCartDetails cart = new AddToCartDetails();
+            AddToWishListDetails WishList = new AddToWishListDetails();
             try
             {
                 //Connection string declared
@@ -31,7 +30,7 @@ namespace RepositoryLayer.Services
 
                 using (SqlConnection Connection = new SqlConnection(connect))
                 {
-                    SqlCommand sqlCommand = new SqlCommand("AddToCart", Connection);
+                    SqlCommand sqlCommand = new SqlCommand("AddTowishList", Connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
 
                     sqlCommand.Parameters.AddWithValue("@UserId", UserId);
@@ -47,31 +46,31 @@ namespace RepositoryLayer.Services
                     //While Loop For Reading status result from SqlDataReader.
                     while (reader.Read())
                     {
-                        cart.CartId = Convert.ToInt32(reader["CartId"].ToString());
-                        cart.UserId = Convert.ToInt32(reader["UserId"].ToString());
-                        cart.BookId = Convert.ToInt32(reader["BookId"].ToString());
-                        cart.Title = reader["Title"].ToString();
-                        cart.Description = reader["Description"].ToString();
-                        cart.Author = reader["Author"].ToString();
-                        cart.Price = Convert.ToDouble(reader["Price"].ToString());
-                        cart.Quantity = Convert.ToInt32(reader["Quantity"].ToString());
+                        WishList.WishListId = Convert.ToInt32(reader["WishListId"].ToString());
+                        WishList.UserId = Convert.ToInt32(reader["UserId"].ToString());
+                        WishList.BookId = Convert.ToInt32(reader["BookId"].ToString());
+                        WishList.Title = reader["Title"].ToString();
+                        WishList.Description = reader["Description"].ToString();
+                        WishList.Author = reader["Author"].ToString();
+                        WishList.Price = Convert.ToDouble(reader["Price"].ToString());
+                        WishList.Quantity = Convert.ToInt32(reader["Quantity"].ToString());
                     }
 
                     //connection close
                     Connection.Close();
                 }
-                return cart;
+                return WishList;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
 
-        //View Cart details by UserId
-        public List<CustomerCartDetails> ViewCartDetails(int UserId)
+
+        public List<CustomerWishListDetails> ViewWishListDetails(int UserId)
         {
-            List<CustomerCartDetails> list = new List<CustomerCartDetails>();
+            List<CustomerWishListDetails> list = new List<CustomerWishListDetails>();
             try
             {
                 //Connection string declared
@@ -79,7 +78,7 @@ namespace RepositoryLayer.Services
 
                 using (SqlConnection Connection = new SqlConnection(connect))
                 {
-                    SqlCommand sqlCommand = new SqlCommand("ViewCartById", Connection);
+                    SqlCommand sqlCommand = new SqlCommand("ViewWishListById", Connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
 
                     sqlCommand.Parameters.AddWithValue("@UserId", UserId);
@@ -93,18 +92,18 @@ namespace RepositoryLayer.Services
                     //While Loop For Reading status result from SqlDataReader.
                     while (reader.Read())
                     {
-                        CustomerCartDetails cart = new CustomerCartDetails();
-                        cart.CartId = Convert.ToInt32(reader["CartId"].ToString());
-                        cart.BookId = Convert.ToInt32(reader["BookId"].ToString());
-                        cart.Title = reader["Title"].ToString();
-                        cart.Author = reader["Author"].ToString();
-                        cart.Price = Convert.ToDouble(reader["Price"].ToString());
-                        cart.Quantity = Convert.ToInt32(reader["Quantity"].ToString());
-                        //cart.IsUsed = Convert.ToBoolean(reader["IsUsed"]);
-                        //cart.IsDeleted = Convert.ToBoolean(reader["IsDeleted"]);
-                        cart.DateCreated = Convert.ToDateTime(reader["DateCreated"].ToString());
-                        cart.DateModified = Convert.ToDateTime(reader["DateModified"].ToString());
-                        list.Add(cart);
+                        CustomerWishListDetails WishList = new CustomerWishListDetails();
+                        WishList.WishListId = Convert.ToInt32(reader["WishListId"].ToString());
+                        WishList.BookId = Convert.ToInt32(reader["BookId"].ToString());
+                        WishList.Title = reader["Title"].ToString();
+                        WishList.Author = reader["Author"].ToString();
+                        WishList.Price = Convert.ToDouble(reader["Price"].ToString());
+                        WishList.Quantity = Convert.ToInt32(reader["Quantity"].ToString());
+                        WishList.IsMoved = Convert.ToBoolean(reader["IsMoved"]);
+                        WishList.IsDeleted = Convert.ToBoolean(reader["IsDeleted"]);
+                        WishList.DateCreated = Convert.ToDateTime(reader["DateCreatedWL"].ToString());
+                        WishList.DateModified = Convert.ToDateTime(reader["DateModifiedWL"].ToString());
+                        list.Add(WishList);
                     }
 
                     //Connection close
@@ -112,14 +111,13 @@ namespace RepositoryLayer.Services
                 }
                 return list;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
 
-        //Delete cart details
-        public Response DeleteFromCart(int UserId, int CartId)
+        public Response DeleteFromWishList(int UserId, int WishListId)
         {
             Response response = new Response();
             try
@@ -129,10 +127,10 @@ namespace RepositoryLayer.Services
 
                 using (SqlConnection Connection = new SqlConnection(connect))
                 {
-                    SqlCommand sqlCommand = new SqlCommand("DeleteFromCartById", Connection);
+                    SqlCommand sqlCommand = new SqlCommand("DeleteFromWishListById", Connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@UserId", UserId);
-                    sqlCommand.Parameters.AddWithValue("@CartId", CartId);
+                    sqlCommand.Parameters.AddWithValue("@WishListId", WishListId);
 
                     Connection.Open();
 

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CommonLayer.CartModel
+namespace CommonLayer.WishListModel
 {
-    public class CustomerCartDetails
+    public class CustomerWishListDetails
     {
-        public int CartId { get; set; }
+        public int WishListId { get; set; }
 
         public int BookId { get; set; }
 
@@ -18,7 +18,7 @@ namespace CommonLayer.CartModel
 
         public int Quantity { get; set; }
 
-        public bool IsUsed { get; set; }
+        public bool IsMoved { get; set; }
 
         public bool IsDeleted { get; set; }
 
