@@ -297,7 +297,6 @@ namespace RepositoryLayer.Services
                         data.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
                         data.Price = Convert.ToDouble(dataReader["Price"].ToString());
                         //data.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
-
                     }
 
                     //connection close
