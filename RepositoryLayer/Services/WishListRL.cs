@@ -67,7 +67,6 @@ namespace RepositoryLayer.Services
             }
         }
 
-
         public List<CustomerWishListDetails> ViewWishListDetails(int UserId)
         {
             List<CustomerWishListDetails> list = new List<CustomerWishListDetails>();
