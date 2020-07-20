@@ -135,7 +135,7 @@ namespace BookStore.Controllers
             try
             {
                 var data = BookDetails.BookSearch(Search);
-                if ( data.Author != null)
+                if ( data != null)
                 {
                     return Ok(new { success = true, message = "found", Data = data });
                 }

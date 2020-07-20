@@ -90,7 +90,7 @@ namespace BusinessLayer.Services
         }
 
         //Method to serach book
-        public BooksDetails BookSearch(string search)
+        public List<BooksDetails> BookSearch(string search)
         {
             try
             {

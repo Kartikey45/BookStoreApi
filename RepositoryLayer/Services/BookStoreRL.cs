@@ -178,10 +178,10 @@ namespace RepositoryLayer.Services
         }
 
         //method to search book
-        public BooksDetails BookSearch(string search)
+        public List<BooksDetails> BookSearch(string search)
         {
-            //Create instance of Model class
-            BooksDetails details = new BooksDetails();
+            List<BooksDetails> list = new List<BooksDetails>();
+   
             try
             {
                 //Connection string declared
@@ -200,15 +200,17 @@ namespace RepositoryLayer.Services
                     SqlDataReader dataReader = sqlCommand.ExecuteReader();
                     while (dataReader.Read())
                     {
+                        BooksDetails details = new BooksDetails();
                         details.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
                         details.Title = dataReader["Title"].ToString();
                         details.Description = dataReader["Description"].ToString();
                         details.Author = dataReader["Author"].ToString();
                         details.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
                         details.Price = Convert.ToDouble(dataReader["Price"].ToString());
+                        list.Add(details);
                     }
                 }
-                return details;
+                return list;
             }
             catch(Exception ex)
             {

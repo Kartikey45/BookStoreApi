@@ -21,7 +21,7 @@ namespace BusinessLayer.Interface
         BooksDetails UpdateBooks(int BookId, UpdateBookDetails details);
 
         //Method to search book 
-        BooksDetails BookSearch(string search);
+        List<BooksDetails> BookSearch(string search);
 
         //Method to sort By book details
         List<Sort> SortByBookDetails(string columnName, string order);
