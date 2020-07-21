@@ -16,5 +16,8 @@ namespace RepositoryLayer.Interface
 
         //Delete cart details
         Response DeleteFromCart(int UserId, int CartId);
+
+        //Add to cart from Wish list
+        AddToCartDetails WishListToCart(int UserId , int WishListId);
     }
 }

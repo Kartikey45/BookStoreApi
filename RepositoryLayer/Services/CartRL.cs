@@ -157,5 +157,49 @@ namespace RepositoryLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        //Move to cart from wish list
+        public AddToCartDetails WishListToCart(int UserId, int WishListId)
+        {
+            AddToCartDetails cart = new AddToCartDetails();
+            try
+            {
+                //Connection string declared
+                string connect = Configuration.GetConnectionString("MyConnection");
+
+                using (SqlConnection Connection = new SqlConnection(connect))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("WishListToCart", Connection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.AddWithValue("@UserId", UserId);
+                    sqlCommand.Parameters.AddWithValue("@WishListId", WishListId);
+
+                    //connection open 
+                    Connection.Open();
+
+                    // Read data form database
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                    //While Loop For Reading status result from SqlDataReader.
+                    while (reader.Read())
+                    {
+                        cart.CartId = Convert.ToInt32(reader["CartId"].ToString());
+                        cart.UserId = Convert.ToInt32(reader["UserId"].ToString());
+                        cart.BookId = Convert.ToInt32(reader["BookId"].ToString());
+                        cart.Title = reader["Title"].ToString();
+                        cart.Description = reader["Description"].ToString();
+                        cart.Author = reader["Author"].ToString();
+                        cart.Price = Convert.ToDouble(reader["Price"].ToString());
+                        cart.Quantity = Convert.ToInt32(reader["Quantity"].ToString());
+                    }
+                }
+                return cart;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

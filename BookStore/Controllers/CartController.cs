@@ -106,5 +106,30 @@ namespace BookStore.Controllers
                 return BadRequest(new { succcess = false, message = ex.Message });
             }
         }
+
+        [HttpPost]
+        [Route("{WishListId}")]
+        [Authorize(Roles = "Customer")]
+        public IActionResult WishListToCart(int WishListId)
+        {
+            try
+            {
+                var user = HttpContext.User;
+                int UserId = Convert.ToInt32(user.Claims.FirstOrDefault(u => u.Type == "UserId").Value);
+                var data = cartBL.WishListToCart(UserId, WishListId);
+                if (data.Title != null)
+                {
+                    return Ok(new { success = true, message = "successfull", UserId, Data = data });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Book is not available in store" });
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

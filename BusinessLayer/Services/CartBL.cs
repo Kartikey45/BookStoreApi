@@ -58,5 +58,17 @@ namespace BusinessLayer.Services
             }
         }
 
+        public AddToCartDetails WishListToCart(int UserId, int WishListId)
+        {
+            try
+            {
+                var data = cartRL.WishListToCart(UserId, WishListId);
+                return data;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
