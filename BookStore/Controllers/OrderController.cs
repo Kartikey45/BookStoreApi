@@ -74,5 +74,33 @@ namespace BookStore.Controllers
                 return BadRequest(new { succcess = false, message = ex.Message });
             }
         }
+
+        [HttpPut]
+        [Authorize(Roles = "Customer")]
+        public IActionResult CancellOrder(int OrderId)
+        {
+            try
+            {
+                if(OrderId < 0)
+                {
+                    throw new Exception();
+                }
+                var user = HttpContext.User;
+                int UserId = Convert.ToInt32(user.Claims.FirstOrDefault(u => u.Type == "UserId").Value);
+                var data = order.CancellOrder(UserId, OrderId);
+                if (data.Status == "Not Cancelled")
+                {
+                    return NotFound(new { success = false, Message = "Failed to Cancelled" });
+                }
+                else
+                {
+                    return Ok(new { success = true, Message = "Order Cancelled" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { succcess = false, message = ex.Message });
+            }
+        }
     }
 }

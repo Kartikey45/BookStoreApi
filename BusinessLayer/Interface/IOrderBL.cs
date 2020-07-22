@@ -1,4 +1,5 @@
-﻿using CommonLayer.OrderModel;
+﻿using CommonLayer.Models;
+using CommonLayer.OrderModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,5 +13,8 @@ namespace BusinessLayer.Interface
 
         // View Order details
         List<Orderdetails> ViewOrderPlaced(int UserId);
+
+        //Cancell Order
+        Response CancellOrder(int UserId, int OrderId);
     }
 }

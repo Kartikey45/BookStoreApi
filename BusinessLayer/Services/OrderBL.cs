@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using CommonLayer.Models;
 using CommonLayer.OrderModel;
 using RepositoryLayer.Interface;
 using System;
@@ -17,6 +18,7 @@ namespace BusinessLayer.Services
         {
             this.order = order;
         }
+
 
         //place order
         public Orderdetails PlaceOrder(int UserId, int CartId)
@@ -37,6 +39,19 @@ namespace BusinessLayer.Services
             try
             {
                 var data = order.ViewOrderPlaced(UserId);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public Response CancellOrder(int UserId, int OrderId)
+        {
+            try
+            {
+                var data = order.CancellOrder(UserId, OrderId);
                 return data;
             }
             catch (Exception ex)
