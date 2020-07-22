@@ -50,5 +50,29 @@ namespace BookStore.Controllers
                 return BadRequest(new { succcess = false, message = ex.Message });
             }
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Customer")]
+        public IActionResult ViewOrderPlaced()
+        {
+            try
+            {
+                var user = HttpContext.User;
+                int UserId = Convert.ToInt32(user.Claims.FirstOrDefault(u => u.Type == "UserId").Value);
+                var data = order.ViewOrderPlaced(UserId);
+                if (data != null)
+                {
+                    return Ok(new { success = true, message = "Order fetched successfully", UserId, Data = data });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Orders not found" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { succcess = false, message = ex.Message });
+            }
+        }
     }
 }

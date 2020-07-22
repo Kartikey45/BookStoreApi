@@ -31,5 +31,18 @@ namespace BusinessLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public List<Orderdetails> ViewOrderPlaced(int UserId)
+        {
+            try
+            {
+                var data = order.ViewOrderPlaced(UserId);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

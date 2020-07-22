@@ -9,5 +9,8 @@ namespace BusinessLayer.Interface
     {
         //Place order
         Orderdetails PlaceOrder(int UserId, int CartId);
+
+        // View Order details
+        List<Orderdetails> ViewOrderPlaced(int UserId);
     }
 }
