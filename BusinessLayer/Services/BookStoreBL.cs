@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.BookStoreModel;
 using CommonLayer.Models;
+using Microsoft.AspNetCore.Http;
 using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
@@ -98,6 +99,20 @@ namespace BusinessLayer.Services
                 return data;
             }
             catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        //Insert image
+        public Storedetails InsertImage(IFormFile BookImage, int BookId)
+        {
+            try
+            {
+                var data = BookDetails.InsertImage(BookImage,BookId);
+                return data;
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

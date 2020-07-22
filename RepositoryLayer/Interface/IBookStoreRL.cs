@@ -1,5 +1,6 @@
 ﻿using CommonLayer.BookStoreModel;
 using CommonLayer.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,5 +26,8 @@ namespace RepositoryLayer.Interface
 
         //Method to sort By book details
         List<Sort> SortByBookDetails(string columnName, string order);
+
+        //Insert BookImage
+        Storedetails InsertImage(IFormFile BookImage, int BookId);
     }
 }

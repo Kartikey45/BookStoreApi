@@ -179,5 +179,32 @@ namespace BookStore.Controllers
             }
         }
 
+        //Method to delete Book by id
+        [Authorize(Roles = "Admin")]
+        [HttpPut]
+        [Route("ImageInsert")]
+        public IActionResult InsertImage(IFormFile BookImage, int BookId)
+        {
+            try
+            {
+                if(BookId < 0  || BookImage == null)
+                {
+                    throw new Exception("Given Invalid details");
+                }
+                var data = BookDetails.InsertImage(BookImage, BookId);
+                if(data.Title != null)
+                {
+                    return Ok(new { success = true, message = "Image Inserted successfully", Data = data });
+                }
+                else
+                {
+                    return Conflict(new { success = false, messsage = "failed to insert image" });
+                }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

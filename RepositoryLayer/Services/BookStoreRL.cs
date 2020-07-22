@@ -1,5 +1,8 @@
-﻿using CommonLayer.BookStoreModel;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using CommonLayer.BookStoreModel;
 using CommonLayer.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using RepositoryLayer.Interface;
 using System;
@@ -307,6 +310,70 @@ namespace RepositoryLayer.Services
                 return data;
             }
             catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        //Insert BookImage
+        public Storedetails InsertImage(IFormFile BookImage, int BookId)
+        {
+            Storedetails details = new Storedetails();
+            try
+            {
+                Account account = new Account
+                (
+                    Configuration["CloudinaryAccount:CloudName"],
+                    Configuration["CloudinaryAccount:ApiKey"],
+                    Configuration["CloudinaryAccount:ApiSecret"]
+                );
+
+                var path = BookImage.OpenReadStream();
+
+                Cloudinary cloudinary = new Cloudinary(account);
+
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(BookImage.FileName,path)
+                };
+                var uploadResult = cloudinary.Upload(uploadParams);
+
+                //Connection string declared
+                string connect = Configuration.GetConnectionString("MyConnection");
+
+                using (SqlConnection Connection = new SqlConnection(connect))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("ImageInsert", Connection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@BookId", BookId);
+                    sqlCommand.Parameters.AddWithValue("@BookImage", uploadResult.Url.ToString());
+
+                    //connection open 
+                    Connection.Open();
+
+                    //Read the data by using sql command
+                    SqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        details.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
+                        details.Title = dataReader["Title"].ToString();
+                        details.Description = dataReader["Description"].ToString();
+                        details.Author = dataReader["Author"].ToString();
+                        details.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
+                        details.Price = Convert.ToDouble(dataReader["Price"].ToString());
+                        details.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+                        details.ModifiedDate = Convert.ToDateTime(dataReader["ModifiedDate"].ToString());
+                        details.IsDeleted = Convert.ToBoolean(dataReader["IsDeleted"].ToString());
+                        details.BookImage = dataReader["BookImage"].ToString();
+                    }
+
+                    //connection close
+                    Connection.Close();
+                }
+                return details;
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
