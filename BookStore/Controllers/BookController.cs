@@ -54,7 +54,7 @@ namespace BookStore.Controllers
         //Method to update book details
         [Authorize(Roles = "Admin")]
         [HttpPut]
-        [Route("UpdateBookDetails")]
+        [Route("{BookId}")]
         public IActionResult UpdateBooksDetails(int BookId, UpdateBookDetails data)
         {
             try
@@ -105,7 +105,7 @@ namespace BookStore.Controllers
 
         //Method to sort By book details
         [HttpGet]
-        [Route("{columnName}/SortBy/{order}")]
+        [Route("Sorting")]
         public IActionResult SortByBookDetails(string columnName, string order)
         {
             try
@@ -182,8 +182,8 @@ namespace BookStore.Controllers
         //Method to delete Book by id
         [Authorize(Roles = "Admin")]
         [HttpPut]
-        [Route("ImageInsert")]
-        public IActionResult InsertImage(IFormFile BookImage, int BookId)
+        [Route("InsertImage/{BookId}")]
+        public IActionResult InsertImage( IFormFile BookImage, int BookId)
         {
             try
             {

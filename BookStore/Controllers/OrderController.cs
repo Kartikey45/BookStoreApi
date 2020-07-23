@@ -53,8 +53,7 @@ namespace BookStore.Controllers
                                   "\n City : " + Convert.ToString(data.City) +
                                   "\n Phone Number : " + Convert.ToString(data.PhoneNumber) +
                                   "\n Total Price : " + Convert.ToDouble(data.TotalPrice) +
-                                  "\n Ordered Placed : " + Convert.ToBoolean(data.OrderPlaced) +
-                                  "\n Book Image : " + Convert.ToString(data.BookImage);
+                                  "\n Ordered Placed : " + Convert.ToBoolean(data.OrderPlaced);
                     sender.Message(MSMQ);
                     return Ok(new { success = true, message = "Order Placed", UserId, Data = data });
                 }
@@ -95,6 +94,7 @@ namespace BookStore.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Customer")]
+        [Route("{OrderId}")]
         public IActionResult CancellOrder(int OrderId)
         {
             try

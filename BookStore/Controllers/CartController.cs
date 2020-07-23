@@ -25,7 +25,7 @@ namespace BookStore.Controllers
         }
 
         [HttpPost]
-        [Route("{BookId}/{Quantity}")]
+        [Route("")]
         [Authorize(Roles = "Customer")]
         public IActionResult AddToCart(int BookId, int Quantity)
         {
@@ -108,7 +108,7 @@ namespace BookStore.Controllers
         }
 
         [HttpPost]
-        [Route("{WishListId}")]
+        [Route("WishListToCart/{WishListId}")]
         [Authorize(Roles = "Customer")]
         public IActionResult WishListToCart(int WishListId)
         {
