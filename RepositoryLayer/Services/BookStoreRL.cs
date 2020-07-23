@@ -24,9 +24,9 @@ namespace RepositoryLayer.Services
         }
 
         //Method to insert books
-        public BooksDetails InsertBooks(BookStoreDetails details)
+        public Storedetails InsertBooks(BookStoreDetails details)
         {
-            BooksDetails data = new BooksDetails();
+            Storedetails data = new Storedetails();
 
             try
             {
@@ -59,7 +59,6 @@ namespace RepositoryLayer.Services
 
                     while (dataReader.Read())
                     {
-                        
                         data.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
                         data.Title = dataReader["Title"].ToString();
                         data.Description = dataReader["Description"].ToString();
@@ -67,7 +66,9 @@ namespace RepositoryLayer.Services
                         data.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
                         data.Price = Convert.ToDouble(dataReader["Price"].ToString());
                         data.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
-                        
+                        data.ModifiedDate = Convert.ToDateTime(dataReader["ModifiedDate"].ToString());
+                        data.IsDeleted = Convert.ToBoolean(dataReader["IsDeleted"].ToString());
+                        data.BookImage = dataReader["BookImage"].ToString();
                     }
 
                     //connection close
@@ -83,10 +84,10 @@ namespace RepositoryLayer.Services
         }
 
         //Method to vieww all books
-        public List<BooksDetails> ViewAllBooks()
+        public List<Storedetails> ViewAllBooks()
         {
             // Creat list of recoeds of all the books
-            List<BooksDetails> list = new List<BooksDetails>();
+            List<Storedetails> list = new List<Storedetails>();
 
             try
             {
@@ -108,14 +109,17 @@ namespace RepositoryLayer.Services
 
                     while (dataReader.Read())
                     {
-                        BooksDetails details = new BooksDetails();
-                        details.BookId = Convert.ToInt32(dataReader["BookId"].ToString()); 
+                        Storedetails details = new Storedetails();
+                        details.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
                         details.Title = dataReader["Title"].ToString();
                         details.Description = dataReader["Description"].ToString();
                         details.Author = dataReader["Author"].ToString();
                         details.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
                         details.Price = Convert.ToDouble(dataReader["Price"].ToString());
                         details.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+                        details.ModifiedDate = Convert.ToDateTime(dataReader["ModifiedDate"].ToString());
+                        details.IsDeleted = Convert.ToBoolean(dataReader["IsDeleted"].ToString());
+                        details.BookImage = dataReader["BookImage"].ToString();
                         list.Add(details);
                     }
 
@@ -131,9 +135,9 @@ namespace RepositoryLayer.Services
         }
 
         //Method to sort By book details
-        public List<Sort> SortByBookDetails(string columnName, string order)
+        public List<Storedetails> SortByBookDetails(string columnName, string order)
         {
-            List<Sort> list = new List<Sort>(); 
+            List<Storedetails> list = new List<Storedetails>(); 
             try
             {
 
@@ -157,16 +161,18 @@ namespace RepositoryLayer.Services
 
                     while (dataReader.Read())
                     {
-                        Sort sort = new Sort();
-                        sort.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
-                        sort.Title = dataReader["Title"].ToString();
-                        sort.Description = dataReader["Description"].ToString();
-                        sort.Author = dataReader["Author"].ToString();
-                        sort.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
-                        sort.Price = Convert.ToDouble(dataReader["Price"].ToString());
-                        //sort.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
-                        //sort.ModifiedDate = Convert.ToDateTime(dataReader["ModifiedDate"].ToString());
-                        list.Add(sort);
+                        Storedetails details = new Storedetails();
+                        details.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
+                        details.Title = dataReader["Title"].ToString();
+                        details.Description = dataReader["Description"].ToString();
+                        details.Author = dataReader["Author"].ToString();
+                        details.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
+                        details.Price = Convert.ToDouble(dataReader["Price"].ToString());
+                        details.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+                        details.ModifiedDate = Convert.ToDateTime(dataReader["ModifiedDate"].ToString());
+                        details.IsDeleted = Convert.ToBoolean(dataReader["IsDeleted"].ToString());
+                        details.BookImage = dataReader["BookImage"].ToString();
+                        list.Add(details);
                     }
 
                     //Connection close
@@ -181,9 +187,9 @@ namespace RepositoryLayer.Services
         }
 
         //method to search book
-        public List<BooksDetails> BookSearch(string search)
+        public List<Storedetails> BookSearch(string search)
         {
-            List<BooksDetails> list = new List<BooksDetails>();
+            List<Storedetails> list = new List<Storedetails>();
    
             try
             {
@@ -203,13 +209,17 @@ namespace RepositoryLayer.Services
                     SqlDataReader dataReader = sqlCommand.ExecuteReader();
                     while (dataReader.Read())
                     {
-                        BooksDetails details = new BooksDetails();
+                        Storedetails details = new Storedetails();
                         details.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
                         details.Title = dataReader["Title"].ToString();
                         details.Description = dataReader["Description"].ToString();
                         details.Author = dataReader["Author"].ToString();
                         details.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
                         details.Price = Convert.ToDouble(dataReader["Price"].ToString());
+                        details.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+                        details.ModifiedDate = Convert.ToDateTime(dataReader["ModifiedDate"].ToString());
+                        details.IsDeleted = Convert.ToBoolean(dataReader["IsDeleted"].ToString());
+                        details.BookImage = dataReader["BookImage"].ToString();
                         list.Add(details);
                     }
                 }
@@ -261,12 +271,12 @@ namespace RepositoryLayer.Services
         }
 
         //Method to update book
-        public BooksDetails UpdateBooks(int BookId, UpdateBookDetails details)
+        public Storedetails UpdateBooks(int BookId, UpdateBookDetails data)
         {
-            BooksDetails data = new BooksDetails();
-            
+            Storedetails details = new Storedetails();
             try
             {
+
                 //Connection string declared
                 string connect = Configuration.GetConnectionString("MyConnection");
 
@@ -279,12 +289,13 @@ namespace RepositoryLayer.Services
 
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@BookId", BookId);
-                    sqlCommand.Parameters.AddWithValue("@Title", details.Title);
-                    sqlCommand.Parameters.AddWithValue("@Description", details.Description);
-                    sqlCommand.Parameters.AddWithValue("@Author", details.Author);
-                    sqlCommand.Parameters.AddWithValue("@BooksAvailable", details.BooksAvailable);
-                    sqlCommand.Parameters.AddWithValue("@Price", details.Price);
+                    sqlCommand.Parameters.AddWithValue("@Title", data.Title);
+                    sqlCommand.Parameters.AddWithValue("@Description", data.Description);
+                    sqlCommand.Parameters.AddWithValue("@Author", data.Author);
+                    sqlCommand.Parameters.AddWithValue("@BooksAvailable", data.BooksAvailable);
+                    sqlCommand.Parameters.AddWithValue("@Price", data.Price);
                     sqlCommand.Parameters.AddWithValue("@ModifiedDate", modifiedDate);
+                    //sqlCommand.Parameters.AddWithValue("@BookImage", uploadResult.Url.ToString());
 
                     //connection open 
                     Connection.Open();
@@ -294,20 +305,22 @@ namespace RepositoryLayer.Services
 
                     while (dataReader.Read())
                     {
-
-                        data.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
-                        data.Title = dataReader["Title"].ToString();
-                        data.Description = dataReader["Description"].ToString();
-                        data.Author = dataReader["Author"].ToString();
-                        data.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
-                        data.Price = Convert.ToDouble(dataReader["Price"].ToString());
-                        //data.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+                        details.BookId = Convert.ToInt32(dataReader["BookId"].ToString());
+                        details.Title = dataReader["Title"].ToString();
+                        details.Description = dataReader["Description"].ToString();
+                        details.Author = dataReader["Author"].ToString();
+                        details.BooksAvailable = Convert.ToInt32(dataReader["BooksAvailable"].ToString());
+                        details.Price = Convert.ToDouble(dataReader["Price"].ToString());
+                        details.CreatedDate = Convert.ToDateTime(dataReader["CreatedDate"].ToString());
+                        details.ModifiedDate = Convert.ToDateTime(dataReader["ModifiedDate"].ToString());
+                        details.IsDeleted = Convert.ToBoolean(dataReader["IsDeleted"].ToString());
+                        details.BookImage = dataReader["BookImage"].ToString();
                     }
 
                     //connection close
                     Connection.Close();
                 }
-                return data;
+                return details;
             }
             catch(Exception ex)
             {

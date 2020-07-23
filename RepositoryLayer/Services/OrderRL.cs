@@ -59,6 +59,7 @@ namespace RepositoryLayer.Services
                         details.OrderPlaced = Convert.ToBoolean(reader["OrderPlaced"].ToString());
                         details.CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString());
                         details.ModifiedDate = Convert.ToDateTime(reader["ModifiedDate"].ToString());
+                        details.BookImage = reader["BookImage"].ToString();
                     }
 
                     //connection close
@@ -111,6 +112,7 @@ namespace RepositoryLayer.Services
                         details.OrderPlaced = Convert.ToBoolean(reader["OrderPlaced"].ToString());
                         details.CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString());
                         details.ModifiedDate = Convert.ToDateTime(reader["ModifiedDate"].ToString());
+                        details.BookImage = reader["BookImage"].ToString();
                         list.Add(details);
                     }
 

@@ -128,7 +128,7 @@ namespace BookStore.Controllers
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                return BadRequest(new { succcess = false, message = ex.Message });
             }
         }
     }

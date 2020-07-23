@@ -10,22 +10,21 @@ namespace BusinessLayer.Interface
     public interface IBookStoreBL
     {
         //Method to add books in book store
-        BooksDetails InsertBooks(BookStoreDetails details);
+        Storedetails InsertBooks(BookStoreDetails details);
 
         //Method to get all book details
-        List<BooksDetails> ViewAllBooks();
-
+        List<Storedetails> ViewAllBooks();
         //Method to Delete Book details
         Response DeleteBook(int BookId);
 
-        //Method to update Book details
-        BooksDetails UpdateBooks(int BookId, UpdateBookDetails details);
+        //Method to update book
+        Storedetails UpdateBooks(int BookId, UpdateBookDetails data);
 
         //Method to search book 
-        List<BooksDetails> BookSearch(string search);
+        List<Storedetails> BookSearch(string search);
 
         //Method to sort By book details
-        List<Sort> SortByBookDetails(string columnName, string order);
+        List<Storedetails> SortByBookDetails(string columnName, string order);
 
         //Insert BookImage
         Storedetails InsertImage(IFormFile BookImage, int BookId);

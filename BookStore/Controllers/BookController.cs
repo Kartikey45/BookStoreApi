@@ -54,8 +54,8 @@ namespace BookStore.Controllers
         //Method to update book details
         [Authorize(Roles = "Admin")]
         [HttpPut]
-        [Route("{BookId}")]
-        public IActionResult UpdateBooksDetails(int BookId, UpdateBookDetails details)
+        [Route("UpdateBookDetails")]
+        public IActionResult UpdateBooksDetails(int BookId, UpdateBookDetails data)
         {
             try
             {
@@ -64,8 +64,8 @@ namespace BookStore.Controllers
                     throw new Exception("Invalid BookId");
                 }
 
-                var data = BookDetails.UpdateBooks(BookId, details);
-                if(data.Title != null)
+                var result = BookDetails.UpdateBooks(BookId, data);
+                if(result.Title != null)
                 {
                     return Ok(new { success = true, messsage = "successfully updated", Data = data});
                 }

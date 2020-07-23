@@ -104,6 +104,7 @@ namespace RepositoryLayer.Services
                         cart.IsDeleted = Convert.ToBoolean(reader["IsDeleted"]);
                         cart.DateCreated = Convert.ToDateTime(reader["DateCreated"].ToString());
                         cart.DateModified = Convert.ToDateTime(reader["DateModified"].ToString());
+                        cart.BookImage = reader["BookImage"].ToString();
                         list.Add(cart);
                     }
 

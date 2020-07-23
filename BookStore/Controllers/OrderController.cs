@@ -53,7 +53,8 @@ namespace BookStore.Controllers
                                   "\n City : " + Convert.ToString(data.City) +
                                   "\n Phone Number : " + Convert.ToString(data.PhoneNumber) +
                                   "\n Total Price : " + Convert.ToDouble(data.TotalPrice) +
-                                  "\n Ordered Placed : " + Convert.ToBoolean(data.OrderPlaced);
+                                  "\n Ordered Placed : " + Convert.ToBoolean(data.OrderPlaced) +
+                                  "\n Book Image : " + Convert.ToString(data.BookImage);
                     sender.Message(MSMQ);
                     return Ok(new { success = true, message = "Order Placed", UserId, Data = data });
                 }

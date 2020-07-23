@@ -21,7 +21,7 @@ namespace BusinessLayer.Services
         }
 
         //Method to insert book
-        public BooksDetails InsertBooks(BookStoreDetails details)
+        public Storedetails InsertBooks(BookStoreDetails details)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace BusinessLayer.Services
         }
 
         //Get all Books details
-        public List<BooksDetails> ViewAllBooks()
+        public List<Storedetails> ViewAllBooks()
         {
             try
             {
@@ -49,7 +49,7 @@ namespace BusinessLayer.Services
         }
 
         //Method to sort By book details
-        public List<Sort> SortByBookDetails(string columnName, string order)
+        public List<Storedetails> SortByBookDetails(string columnName, string order)
         {
             try
             {
@@ -76,13 +76,13 @@ namespace BusinessLayer.Services
             }
         }
 
-        //Method to update book
-        public BooksDetails UpdateBooks(int BookId, UpdateBookDetails details)
+        //Method to update book details
+        public Storedetails UpdateBooks(int BookId, UpdateBookDetails data)
         {
             try
             {
-                var data = BookDetails.UpdateBooks(BookId, details);
-                return data;
+                var result = BookDetails.UpdateBooks(BookId, data);
+                return result;
             }
             catch(Exception ex)
             {
@@ -91,7 +91,7 @@ namespace BusinessLayer.Services
         }
 
         //Method to serach book
-        public List<BooksDetails> BookSearch(string search)
+        public List<Storedetails> BookSearch(string search)
         {
             try
             {

@@ -102,6 +102,7 @@ namespace RepositoryLayer.Services
                         WishList.IsDeleted = Convert.ToBoolean(reader["IsDeleted"]);
                         WishList.DateCreated = Convert.ToDateTime(reader["DateCreatedWL"].ToString());
                         WishList.DateModified = Convert.ToDateTime(reader["DateModifiedWL"].ToString());
+                        WishList.BookImage = reader["BookImage"].ToString();
                         list.Add(WishList);
                     }
 
