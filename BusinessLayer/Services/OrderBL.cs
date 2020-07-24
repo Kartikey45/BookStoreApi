@@ -59,5 +59,18 @@ namespace BusinessLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public OrderInfo OrderPlace(int UserId, int CartId, string Address, string City, int PinCode)
+        {
+            try
+            {
+                var data = order.OrderPlace(UserId, CartId, Address, City, PinCode);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

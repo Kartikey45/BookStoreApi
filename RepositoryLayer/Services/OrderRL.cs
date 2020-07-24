@@ -167,5 +167,61 @@ namespace RepositoryLayer.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        //place order with different address
+        public OrderInfo OrderPlace(int UserId, int CartId, string Address, string City, int PinCode)
+        {
+            OrderInfo details = new OrderInfo();
+            try
+            {
+                //Connection string declared
+                string connect = Configuration.GetConnectionString("MyConnection");
+
+                using (SqlConnection Connection = new SqlConnection(connect))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("PlaceOrderNew", Connection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.AddWithValue("@UserId", UserId);
+                    sqlCommand.Parameters.AddWithValue("@CartId", CartId);
+                    sqlCommand.Parameters.AddWithValue("@Address", Address);
+                    sqlCommand.Parameters.AddWithValue("@City", City);
+                    sqlCommand.Parameters.AddWithValue("@PinCode", PinCode);
+
+                    //connection open 
+                    Connection.Open();
+
+                    // Read data form database
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                    //While Loop For Reading status result from SqlDataReader.
+                    while (reader.Read())
+                    {
+                        details.OrderId = Convert.ToInt32(reader["OrderId"].ToString());
+                        details.CartId = Convert.ToInt32(reader["CartId"].ToString());
+                        details.UserId = Convert.ToInt32(reader["UserId"].ToString());
+                        details.BookId = Convert.ToInt32(reader["BookId"].ToString());
+                        details.Title = reader["Title"].ToString();
+                        details.Author = reader["Author"].ToString();
+                        details.Address = reader["Address"].ToString();
+                        details.City = reader["City"].ToString();
+                        details.PinCode = Convert.ToInt32(reader["PinCode"].ToString());
+                        details.TotalPrice = Convert.ToDouble(reader["TotalPrice"].ToString());
+                        details.OrderPlaced = Convert.ToBoolean(reader["OrderPlaced"].ToString());
+                        details.CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString());
+                        details.ModifiedDate = Convert.ToDateTime(reader["ModifiedDate"].ToString());
+                        details.BookImage = reader["BookImage"].ToString();
+                    }
+
+                    //connection close
+                    Connection.Close();
+                }
+                return details;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
