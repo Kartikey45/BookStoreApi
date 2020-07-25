@@ -22,6 +22,8 @@ namespace CommonLayer.OrderModel
 
         public string City { get; set; }
 
+        public int PinCode { get; set; }
+
         public string PhoneNumber { get; set; }
 
         public double TotalPrice { get; set; }

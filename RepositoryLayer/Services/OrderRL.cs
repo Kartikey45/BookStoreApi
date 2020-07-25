@@ -107,6 +107,7 @@ namespace RepositoryLayer.Services
                         details.Author = reader["Author"].ToString();
                         details.Address = reader["Address"].ToString();
                         details.City = reader["City"].ToString();
+                        details.PinCode = Convert.ToInt32(reader["PinCode"].ToString());
                         details.PhoneNumber = reader["PhoneNumber"].ToString();
                         details.TotalPrice = Convert.ToDouble(reader["TotalPrice"].ToString());
                         details.OrderPlaced = Convert.ToBoolean(reader["OrderPlaced"].ToString());
