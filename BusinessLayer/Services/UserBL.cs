@@ -9,6 +9,8 @@ namespace BusinessLayer.Services
 {
     public class UserBL : IUserBL
     {
+       
+
         //Initialise variable 
         private readonly IUserRL UserDetails;
 
@@ -36,8 +38,18 @@ namespace BusinessLayer.Services
         //Method to register user details
         public UserDetails Registration(UserRegistration user)
         {
+          
             try
             {
+                if(user == null)
+                {
+                    throw new Exception("It cannot be null");
+                }
+                else if(user.FirstName == "" || user.LastName == "" || user.Email == "" || user.Password == "" || user.Address == "" || user.City == "" || user.PhoneNumber == "")
+                {
+                    throw new Exception("It cannot be Empty");
+                }
+
                 var result = UserDetails.Registration(user);
                 return result;
             }

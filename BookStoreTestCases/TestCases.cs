@@ -3,12 +3,20 @@ using BusinessLayer.Interface;
 using BusinessLayer.Services;
 using CommonLayer.BookStoreModel;
 using CommonLayer.Models;
+using Experimental.System.Messaging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Moq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RepositoryLayer.Interface;
 using RepositoryLayer.Services;
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using Xunit;
+using Xunit.Sdk;
 
 namespace BookStoreTestCases
 {
@@ -38,7 +46,7 @@ namespace BookStoreTestCases
             _IUserRL = new UserRL(configuration);
             _IUserBL = new UserBL(_IUserRL);
             userController = new UserController(_IUserBL, configuration);
-            ;
+            
             _IBookStoreRL = new BookStoreRL(configuration);
             _IBookStoreBL = new BookStoreBL(_IBookStoreRL);
             bookController = new BookController(_IBookStoreBL);
@@ -48,17 +56,37 @@ namespace BookStoreTestCases
             cartController = new CartController(_ICartBL);
         }
 
+        //variable declared
+        bool SuccessTrue = true;
+        bool SuccessFalse = false;
+
         //User Registration returns bad request
         [Fact]
         public void UserRegistration_Returns_BadRequest()
         {
-            UserRegistration details = null;
+            UserRegistration details = new UserRegistration()
+            {
+                FirstName = "",
+                LastName = "",
+                Email = "",
+                Password = "",
+                Address = "",
+                City = "",
+                PhoneNumber = ""
+            };
 
             //Act
-            var result = userController.UserRegistration(details);
+            var result = userController.UserRegistration(details) as BadRequestObjectResult;
+            var dataResponse = JToken.Parse(JsonConvert.SerializeObject(result.Value));
+            var responseSuccess = dataResponse["success"].ToObject<bool>();
+            var responseMessage = dataResponse["message"].ToString();
 
+            string message = "It cannot be Empty";
+            
             //Assert
             Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(SuccessFalse, responseSuccess);
+            Assert.Equal(message, responseMessage);
         }
 
         //User Registration returns ok result
@@ -67,20 +95,28 @@ namespace BookStoreTestCases
         {
             UserRegistration info = new UserRegistration()
             {
-                FirstName = "Ruchika",
-                LastName = "Ahire",
-                Email = "ruchika@gmail.com",
-                Password = "ruchika@123",
-                Address = "Thane",
-                City = "Mumbai",
+                FirstName = "Vandana",
+                LastName = "Karki",
+                Email = "Vandana@gmail.com",
+                Password = "vandana@123",
+                Address = "Ratlam",
+                City = "Ratlam",
                 PhoneNumber = "8521479635"
             };
 
             //Act
-            var result = userController.UserRegistration(info);
+            var result = userController.UserRegistration(info) as OkObjectResult;
+            var dataResponse = JToken.Parse(JsonConvert.SerializeObject(result.Value));
+            var responseSuccess = dataResponse["success"].ToObject<bool>();
+            var responseMessage = dataResponse["Message"].ToString();
+            var responseData = dataResponse["Data"].ToObject<UserRegistration>();
 
+            string message = "registration successfull";
             //Assert
             Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(SuccessTrue, responseSuccess);
+            Assert.Equal(message, responseMessage);
+            Assert.Equal(info.FirstName, responseData.FirstName);
         }
 
         //User registration returns conflict
@@ -99,10 +135,16 @@ namespace BookStoreTestCases
             };
 
             //Act
-            var result = userController.UserRegistration(info);
+            var result = userController.UserRegistration(info) as ConflictObjectResult;
+            var dataResponse = JToken.Parse(JsonConvert.SerializeObject(result.Value));
+            var responseSuccess = dataResponse["success"].ToObject<bool>();
+            var responseMessage = dataResponse["Message"].ToString();
+           
 
             //Assert
             Assert.IsType<ConflictObjectResult>(result);
+            Assert.Equal(SuccessFalse, responseSuccess);
+            Assert.Equal("registration failed", responseMessage);
         }
 
         //user login return ok result
@@ -116,10 +158,17 @@ namespace BookStoreTestCases
             };
 
             //Act
-            var result = userController.UserLogin(login);
+            var result = userController.UserLogin(login) as OkObjectResult;
+            var dataResponse = JToken.Parse(JsonConvert.SerializeObject(result.Value));
+            var responseSuccess = dataResponse["success"].ToObject<bool>();
+            var responseMessage = dataResponse["message"].ToString();
+            var responseData = dataResponse["DATA"].ToObject<UserDetails>();
 
             //Assert
             Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(SuccessTrue, responseSuccess);
+            Assert.Equal("Login Successfully", responseMessage);
+            Assert.Equal("Kartikey", responseData.FirstName);
         }
 
         //userlogin returns not found
@@ -133,10 +182,15 @@ namespace BookStoreTestCases
             };
 
             //Act
-            var result = userController.UserLogin(login);
+            var result = userController.UserLogin(login) as NotFoundObjectResult ;
+            var dataResponse = JToken.Parse(JsonConvert.SerializeObject(result.Value));
+            var responseSuccess = dataResponse["success"].ToObject<bool>();
+            var responseMessage = dataResponse["message"].ToString();
 
             //Assert
             Assert.IsType<NotFoundObjectResult>(result);
+            Assert.Equal(SuccessFalse, responseSuccess);
+            Assert.Equal("Enter Valid Email & Password", responseMessage);
         }
 
         //user login returns bad request
@@ -150,10 +204,15 @@ namespace BookStoreTestCases
             };
 
             //Act
-            var result = userController.UserLogin(login);
+            var result = userController.UserLogin(login) as BadRequestObjectResult;
+            var dataResponse = JToken.Parse(JsonConvert.SerializeObject(result.Value));
+            var responseSuccess = dataResponse["success"].ToObject<bool>();
+            var responseMessage = dataResponse["message"].ToString();
 
             //Assert
             Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(SuccessFalse, responseSuccess);
+            Assert.Equal("Invalid Password type", responseMessage);
         }
 
         // insert book in book store returns ok result
@@ -170,10 +229,17 @@ namespace BookStoreTestCases
             };
 
             //Act
-            var result = bookController.InsertBooks(details);
+            var result = bookController.InsertBooks(details) as OkObjectResult;
+            var dataResponse = JToken.Parse(JsonConvert.SerializeObject(result.Value));
+            var responseSuccess = dataResponse["success"].ToObject<bool>();
+            var responseMessage = dataResponse["Message"].ToString();
+            var responseData = dataResponse["Data"].ToObject<BookStoreDetails>();
 
             //Assert
             Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(SuccessTrue, responseSuccess);
+            Assert.Equal("Book Inserted successfully", responseMessage);
+            Assert.Equal(details.Title, responseData.Title);
         }
 
         // insert book in book store returns conflict
@@ -190,10 +256,15 @@ namespace BookStoreTestCases
             };
 
             //Act
-            var result = bookController.InsertBooks(details);
+            var result = bookController.InsertBooks(details) as ConflictObjectResult;
+            var dataResponse = JToken.Parse(JsonConvert.SerializeObject(result.Value));
+            var responseSuccess = dataResponse["success"].ToObject<bool>();
+            var responseMessage = dataResponse["Message"].ToString();
 
             //Assert
             Assert.IsType<ConflictObjectResult>(result);
+            Assert.Equal(SuccessFalse, responseSuccess);
+            Assert.Equal("This Book is Already registered", responseMessage);
         }
 
         // insert book in book store returns badRequest
@@ -221,10 +292,15 @@ namespace BookStoreTestCases
         public void ViewAllBookDetails_returns_OkResult()
         {
             //Act
-            var result = bookController.ViewAllAbooks();
-
+            var result = bookController.ViewAllAbooks() as OkObjectResult;
+            var dataResponse = JToken.Parse(JsonConvert.SerializeObject(result.Value));
+            var responseSuccess = dataResponse["success"].ToObject<bool>();
+            var responseMessage = dataResponse["message"].ToString();
+            
             //Assert
             Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(SuccessTrue, responseSuccess);
+            Assert.Equal("Data fetched successfully", responseMessage);
         }
 
         //update book by id returns ok result
@@ -365,6 +441,33 @@ namespace BookStoreTestCases
 
             //Assert 
             Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+        //Add To cart  returns ok result
+        [Fact]
+        public void AddToCart_returnsOkResult()
+        {
+            Claim Name = new Claim("UserId", "25");
+            ClaimsIdentity identity = new ClaimsIdentity();
+            identity.AddClaim(Name);
+            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
+            claimsPrincipal.AddIdentity(identity);
+            var contextmock = new Mock<HttpContext>();
+            contextmock.Setup(x => x.User).Returns(claimsPrincipal);
+            cartController.ControllerContext.HttpContext = contextmock.Object;
+
+            //Act
+            var result = cartController.AddToCart(1,5) as OkObjectResult;
+            var dataResponse = JToken.Parse(JsonConvert.SerializeObject(result.Value));
+            var responseSuccess = dataResponse["success"].ToObject<bool>();
+            var responseMessage = dataResponse["message"].ToString();
+            //var responseData = dataResponse["Data"].ToString();
+
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(SuccessTrue, responseSuccess);
+            Assert.Equal("successfully added to cart", responseMessage);
+            //Assert.Equal(result., responseData);
         }
     }
 }

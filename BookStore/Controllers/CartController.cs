@@ -41,7 +41,7 @@ namespace BookStore.Controllers
                 var data = cartBL.AddToCart(UserId, BookId, Quantity);
                 if (data.Title != null)
                 {
-                    return Ok(new { success = true, message = "successfull", UserId, Data = data });
+                    return Ok(new { success = true, message = "successfully added to cart", UserId, Data = data });
                 }
                 else
                 {

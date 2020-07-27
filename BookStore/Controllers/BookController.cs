@@ -94,7 +94,7 @@ namespace BookStore.Controllers
                 }
                 else
                 {
-                    return Ok(new { success = true, message = "successfull", Data = data });
+                    return Ok(new { success = true, message = "Data fetched successfully", Data = data });
                 }
             }
             catch (Exception ex)
